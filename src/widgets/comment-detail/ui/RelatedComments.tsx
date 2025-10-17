@@ -30,13 +30,31 @@ export const RelatedComments: React.FC<RelatedCommentsProps> = ({
 
       {/* 查看更多提示 */}
       {total > comments.length && (
-        <div className="mt-6 p-4 bg-background rounded-lg text-center">
-          <p className="text-body text-text-secondary mb-2">
-            還有 {total - comments.length} 則評論
+        <div className="mt-6 p-5 bg-gray-50 rounded-xl text-center border border-gray-100">
+          <p className="text-sm text-gray-700 mb-3">
+            還有 <span className="font-semibold text-gray-900">{total - comments.length}</span> 則評論
           </p>
-          <p className="text-body-small text-text-light">
-            下載 App 查看完整評論
-          </p>
+          <a
+            href="https://ptalk.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full transition-colors text-sm font-medium"
+          >
+            在 App 查看更多
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </a>
         </div>
       )}
     </div>
