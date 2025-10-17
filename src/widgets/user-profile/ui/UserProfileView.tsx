@@ -1,11 +1,16 @@
 import React from 'react';
-import type { UserProfile, CommentListResponse } from '@/shared/types';
+import type { CommentListResponse } from '@/shared/types';
 import { UserAvatar } from '@/entities/user/ui';
 import { CommentCard } from '@/entities/comment/ui';
 import { DownloadCTA } from '@/features/download-app/ui';
 
 export interface UserProfileViewProps {
-  user: UserProfile;
+  user: {
+    userId: string;
+    name: string;
+    avatar: string;
+    commentCount: number;
+  };
   comments: CommentListResponse;
 }
 
@@ -28,20 +33,20 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({ user, comments
         <div className="border-t border-border my-6" />
 
         {/* 評論列表 */}
-        {comments.comments.length > 0 ? (
+        {comments.items.length > 0 ? (
           <div>
             <h2 className="text-h3 font-bold text-text-primary mb-4">評論</h2>
             <div className="space-y-4">
-              {comments.comments.map((comment) => (
+              {comments.items.map((comment) => (
                 <CommentCard key={comment.id} comment={comment} variant="preview" />
               ))}
             </div>
 
             {/* 查看更多提示 */}
-            {comments.total > comments.comments.length && (
+            {comments.total > comments.items.length && (
               <div className="mt-6 p-6 bg-background rounded-lg text-center">
                 <p className="text-body text-text-primary font-semibold mb-2">
-                  還有 {comments.total - comments.comments.length} 則評論
+                  還有 {comments.total - comments.items.length} 則評論
                 </p>
                 <p className="text-body-small text-text-secondary mb-4">
                   下載 PTalk App 查看所有評論
@@ -59,11 +64,11 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({ user, comments
         )}
 
         {/* 底部下載 CTA */}
-        <DownloadCTA
+        {/* <DownloadCTA
           title="加入 PTalk 社群"
           description="分享你的寵物友善店家體驗"
           className="mt-8"
-        />
+        /> */}
       </div>
     </div>
   );

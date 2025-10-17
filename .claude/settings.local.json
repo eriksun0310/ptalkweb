@@ -5,7 +5,9 @@
       "Bash(dir:*)",
       "Read(//c/**)",
       "Bash(tree:*)",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

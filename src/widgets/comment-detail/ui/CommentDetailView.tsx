@@ -32,19 +32,19 @@ export const CommentDetailView: React.FC<CommentDetailViewProps> = ({
         />
 
         {/* 其他評論 */}
-        {relatedComments.comments.length > 0 && (
+        {relatedComments.items.length > 0 && (
           <RelatedComments
-            comments={relatedComments.comments}
+            comments={relatedComments.items}
             total={relatedComments.total}
             className="mb-6"
           />
         )}
 
         {/* 底部下載 CTA */}
-        <DownloadCTA
+        {/* <DownloadCTA
           title="加入 PTalk 社群"
           description="分享你的寵物友善店家體驗"
-        />
+        /> */}
       </div>
     </div>
   );

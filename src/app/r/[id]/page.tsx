@@ -11,9 +11,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // 使用 Mock 資料
   const comment = getMockComment(params.id);
 
-  const title = `${comment.user.name} 在 ${comment.venue.name} 的評價 | PTalk`;
+  const title = `${comment.reviewer.name} 在 ${comment.venue.name} 的評價 | PTalk`;
   const description = comment.content.substring(0, 100) + (comment.content.length > 100 ? '...' : '');
-  const imageUrl = comment.images[0] || comment.venue.mainImage;
+  const imageUrl = comment.files[0]?.url || comment.venue.mainImage || '';
 
   return {
     title,
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: `${comment.user.name} 在 ${comment.venue.name} 的評價`,
+          alt: `${comment.reviewer.name} 在 ${comment.venue.name} 的評價`,
         },
       ],
       type: 'article',
