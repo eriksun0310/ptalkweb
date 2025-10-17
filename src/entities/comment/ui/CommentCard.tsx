@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import type { Comment, CategoryType } from '@/shared/types';
 import { UserAvatar } from '@/entities/user/ui';
 import { RatingDisplay } from './RatingDisplay';
@@ -34,8 +35,20 @@ export const CommentCard: React.FC<CommentCardProps> = ({
   variant = 'full',
   className,
 }) => {
+  const router = useRouter();
   const { reviewer, venue, petInfo, petFriendlyLevel, feedback, content, files, updateTime, id } = comment;
   const isPreview = variant === 'preview';
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (isPreview) {
+      // 如果點擊的是連結，不要觸發卡片點擊
+      const target = e.target as HTMLElement;
+      if (target.closest('a')) {
+        return;
+      }
+      router.push(`/r/${id}`);
+    }
+  };
 
   // 預覽模式：截斷文字到 100 字
   const displayContent =
@@ -81,11 +94,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
         <UserAvatar src={avatarSrc} alt={reviewer.name} size="md" />
         <div className="flex-1 pr-10">
           <div className="flex items-center gap-2 mb-1">
-            <Link
-              href={`/u/${reviewer.userId}`}
-              className="hover:underline"
-              onClick={(e) => isPreview && e.stopPropagation()}
-            >
+            <Link href={`/u/${reviewer.userId}`} className="hover:underline">
               <span className="font-semibold text-gray-900">{reviewer.name}</span>
             </Link>
             <div className="flex gap-0.5">
@@ -107,10 +116,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
       </div>
 
       {/* 店家名稱 - 粗體單獨一行，可點擊跳轉 */}
-      <Link
-        href={`/v/${venue.id}`}
-        onClick={(e) => isPreview && e.stopPropagation()}
-      >
+      <Link href={`/v/${venue.id}`}>
         <h3 className="font-bold text-base text-gray-900 mb-2 hover:text-primary cursor-pointer">
           {venue.name}
         </h3>
@@ -131,27 +137,12 @@ export const CommentCard: React.FC<CommentCardProps> = ({
     </>
   );
 
-  // Preview 模式：整個卡片可點擊跳轉到評論詳細頁
-  if (isPreview) {
-    return (
-      <Link href={`/r/${id}`}>
-        <div
-          className={clsx(
-            'bg-white rounded-2xl p-5 shadow-sm relative cursor-pointer hover:shadow-md transition-shadow',
-            className
-          )}
-        >
-          {cardContent}
-        </div>
-      </Link>
-    );
-  }
-
-  // Full 模式：不可點擊
   return (
     <div
+      onClick={handleCardClick}
       className={clsx(
-        'bg-white rounded-2xl p-5 shadow-sm relative',
+        'bg-white rounded-2xl p-5 shadow-md border border-gray-100 relative',
+        isPreview && 'cursor-pointer',
         className
       )}
     >

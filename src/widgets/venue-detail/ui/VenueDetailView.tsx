@@ -15,7 +15,7 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
   total,
 }) => {
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <div className="min-h-screen bg-white pb-8">
       {/* 主要內容區 */}
       <div className="max-w-2xl mx-auto px-4 pt-20">
         {/* 店家資訊 */}

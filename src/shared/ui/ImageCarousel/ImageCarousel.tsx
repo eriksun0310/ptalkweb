@@ -58,15 +58,6 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, className 
             </button>
           </>
         )}
-
-        {/* 圖片計數器 */}
-        {images.length > 1 && (
-          <div className="absolute bottom-3 right-3 px-2 py-1 bg-black/60 rounded-full backdrop-blur-sm">
-            <span className="text-white text-xs font-medium">
-              {currentIndex + 1} / {images.length}
-            </span>
-          </div>
-        )}
       </div>
 
       {/* 圖片指示點 */}
