@@ -103,14 +103,14 @@ export const CommentCard: React.FC<CommentCardProps> = ({
           </div>
 
           {/* 第二行：寵物品種 | 分類 | 日期 | 友善程度 */}
-          <div className="flex items-center gap-2 text-xs text-gray-600 flex-wrap">
-            <span>{petInfo.breed}</span>
+          <div className="flex items-center gap-2 text-xs text-gray-600">
+            <span className="whitespace-nowrap">{petInfo.breed}</span>
             <span>|</span>
-            <span>{getCategoryName(venue.categoryType)}</span>
+            <span className="whitespace-nowrap">{getCategoryName(venue.categoryType)}</span>
             <span>|</span>
-            <span>{formattedDate}</span>
+            <span className="whitespace-nowrap">{formattedDate}</span>
             <span>|</span>
-            {getPetFriendlyIcon(petFriendlyLevel)}
+            <span className="flex-shrink-0">{getPetFriendlyIcon(petFriendlyLevel)}</span>
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
     <div
       onClick={handleCardClick}
       className={clsx(
-        'bg-white rounded-2xl p-5 shadow-md border border-gray-100 relative',
+        'bg-white border-b border-gray-200 p-4 relative',
         isPreview && 'cursor-pointer',
         className
       )}

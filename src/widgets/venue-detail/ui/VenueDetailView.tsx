@@ -15,18 +15,16 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
   total,
 }) => {
   return (
-    <div className="min-h-screen bg-white pb-8">
-      {/* 主要內容區 */}
-      <div className="max-w-2xl mx-auto px-4 pt-20">
-        {/* 店家資訊 */}
-        <VenueInfo venue={venue} className="mb-6" />
+    <div className="min-h-screen bg-white">
+      {/* 店家資訊 - 無左右 padding */}
+      <VenueInfo venue={venue} />
 
+      {/* 評論區 */}
+      <div className="px-4 py-4">
         {/* 評論列表標題 */}
-        <div className="mb-4">
-          <h2 className="text-lg font-bold text-gray-900">
-            評論 ({total})
-          </h2>
-        </div>
+        <h2 className="text-base font-bold text-gray-900 mb-3">
+          用戶實拍 · 來自 @{comments[0]?.reviewer.name || 'user'}
+        </h2>
 
         {/* 評論列表 */}
         <div className="space-y-4">

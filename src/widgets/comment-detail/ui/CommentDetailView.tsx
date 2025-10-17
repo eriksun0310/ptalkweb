@@ -13,21 +13,19 @@ export const CommentDetailView: React.FC<CommentDetailViewProps> = ({
   relatedComments,
 }) => {
   return (
-    <div className="min-h-screen bg-white pb-8">
-      {/* 主要內容區 */}
-      <div className="max-w-2xl mx-auto px-4 pt-20">
-        {/* 評論卡片 - 完整版，圖片可放大 */}
-        <CommentCard comment={comment} variant="full" className="mb-4" />
+    <div className="min-h-screen bg-white">
+      {/* 評論卡片 - 完整版 */}
+      <CommentCard comment={comment} variant="full" />
 
-        {/* 其他評論 */}
-        {relatedComments.items.length > 0 && (
+      {/* 其他評論 */}
+      {relatedComments.items.length > 0 && (
+        <div className="px-4 py-4">
           <RelatedComments
             comments={relatedComments.items}
             total={relatedComments.total}
-            className="mb-6"
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

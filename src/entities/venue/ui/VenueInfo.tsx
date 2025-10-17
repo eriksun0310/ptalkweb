@@ -30,49 +30,57 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
   };
 
   return (
-    <div className={clsx('bg-white rounded-2xl overflow-hidden shadow-sm', className)}>
+    <div className={clsx('bg-white', className)}>
       {/* 店家圖片 - 全寬 */}
-      <div className="relative w-full aspect-[16/9]">
+      <div className="relative w-full aspect-video">
         <Image
           src={venue.mainImage}
           alt={venue.name}
           fill
           className="object-cover"
-          sizes="(max-width: 768px) 100vw, 600px"
+          sizes="100vw"
           priority
         />
       </div>
 
       {/* 店家資訊 */}
-      <div className="p-4 space-y-2">
-        <h1 className="text-xl font-bold text-gray-900 mb-3">{venue.name}</h1>
+      <div className="px-4 py-4 border-b border-gray-200">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">{venue.name}</h1>
 
-        {/* 抓抓評分 */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-xl font-bold text-gray-900 w-10">
-            {venue.pawRating.toFixed(1)}
-          </span>
-          <div className="flex gap-0.5">
-            {renderRatingIcons(venue.pawRating, 'paw')}
+        {/* 評分行 */}
+        <div className="flex items-center gap-4 mb-2">
+          {/* 抓抓評分 */}
+          <div className="flex items-center gap-1">
+            <span className="text-lg font-bold text-gray-900">
+              {venue.pawRating.toFixed(1)}
+            </span>
+            <div className="flex gap-0.5">
+              {renderRatingIcons(venue.pawRating, 'paw')}
+            </div>
+            <span className="text-xs text-gray-600">({venue.pawCount})</span>
           </div>
-          <span className="text-xs text-gray-600 ml-0.5">({venue.pawCount})</span>
+
+          {/* 便便評分 */}
+          <div className="flex items-center gap-1">
+            <span className="text-lg font-bold text-gray-900">
+              {venue.poopRating.toFixed(1)}
+            </span>
+            <div className="flex gap-0.5">
+              {renderRatingIcons(venue.poopRating, 'poop')}
+            </div>
+            <span className="text-xs text-gray-600">({venue.poopCount})</span>
+          </div>
         </div>
 
-        {/* 便便評分 */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-xl font-bold text-gray-900 w-10">
-            {venue.poopRating.toFixed(1)}
-          </span>
-          <div className="flex gap-0.5">
-            {renderRatingIcons(venue.poopRating, 'poop')}
-          </div>
-          <span className="text-xs text-gray-600 ml-0.5">({venue.poopCount})</span>
+        {/* 營業狀態 */}
+        <div className="text-sm text-green-600 font-medium mb-2">
+          營業中 · 開放營業時間：11:00
         </div>
 
         {/* 地址 */}
-        <div className="flex items-start gap-2 text-gray-600 pt-1">
+        <div className="flex items-start gap-2 text-gray-700">
           <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-          <span className="text-sm leading-snug">{venue.address}</span>
+          <span className="text-sm">{venue.address}</span>
         </div>
       </div>
     </div>
