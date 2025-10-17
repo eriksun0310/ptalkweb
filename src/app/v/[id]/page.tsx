@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const venue = getMockVenue(params.id);
 
   const title = `${venue.name} - 寵物友善店家 | PTalk`;
-  const description = `查看 ${venue.name} 的 ${venue.pawCount} 則評論，評分 ${venue.pawRating.toFixed(1)}`;
+  const description = `查看 ${venue.name} 的 ${venue.pawCount || 0} 則評論，評分 ${venue.pawRating?.toFixed(1) || '0.0'}`;
 
   return {
     title,
@@ -20,14 +20,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      images: [
-        {
-          url: venue.mainImage,
-          width: 1200,
-          height: 630,
-          alt: venue.name,
-        },
-      ],
+      ...(venue.mainImage && {
+        images: [
+          {
+            url: venue.mainImage,
+            width: 1200,
+            height: 630,
+            alt: venue.name,
+          },
+        ],
+      }),
       type: 'website',
       url: `https://ptalk.app/v/${params.id}`,
     },
@@ -35,7 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: [venue.mainImage],
+      ...(venue.mainImage && {
+        images: [venue.mainImage],
+      }),
     },
   };
 }

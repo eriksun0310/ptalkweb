@@ -29,19 +29,26 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
     return icons;
   };
 
+  const pawRating = venue.pawRating ?? 0;
+  const pawCount = venue.pawCount ?? 0;
+  const poopRating = venue.poopRating ?? 0;
+  const poopCount = venue.poopCount ?? 0;
+
   return (
     <div className={clsx('bg-white', className)}>
       {/* 店家圖片 - 全寬 */}
-      <div className="relative w-full aspect-video">
-        <Image
-          src={venue.mainImage}
-          alt={venue.name}
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
-      </div>
+      {venue.mainImage && (
+        <div className="relative w-full aspect-video">
+          <Image
+            src={venue.mainImage}
+            alt={venue.name}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+        </div>
+      )}
 
       {/* 店家資訊 */}
       <div className="px-4 py-4 border-b border-gray-200">
@@ -52,23 +59,23 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
           {/* 抓抓評分 */}
           <div className="flex items-center gap-1">
             <span className="text-base font-bold text-gray-900">
-              {venue.pawRating.toFixed(1)}
+              {pawRating.toFixed(1)}
             </span>
             <div className="flex gap-0.5">
-              {renderRatingIcons(venue.pawRating, 'paw')}
+              {renderRatingIcons(pawRating, 'paw')}
             </div>
-            <span className="text-xs text-gray-500">({venue.pawCount})</span>
+            <span className="text-xs text-gray-500">({pawCount})</span>
           </div>
 
           {/* 便便評分 */}
           <div className="flex items-center gap-1">
             <span className="text-base font-bold text-gray-900">
-              {venue.poopRating.toFixed(1)}
+              {poopRating.toFixed(1)}
             </span>
             <div className="flex gap-0.5">
-              {renderRatingIcons(venue.poopRating, 'poop')}
+              {renderRatingIcons(poopRating, 'poop')}
             </div>
-            <span className="text-xs text-gray-500">({venue.poopCount})</span>
+            <span className="text-xs text-gray-500">({poopCount})</span>
           </div>
         </div>
 
@@ -79,10 +86,12 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
         </div>
 
         {/* 地址 */}
-        <div className="flex items-start gap-2 text-gray-700">
-          <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-          <span className="text-sm">{venue.address}</span>
-        </div>
+        {venue.address && (
+          <div className="flex items-start gap-2 text-gray-700">
+            <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <span className="text-sm">{venue.address}</span>
+          </div>
+        )}
       </div>
     </div>
   );

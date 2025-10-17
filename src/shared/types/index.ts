@@ -22,3 +22,5 @@ export {
   FeedbackType,
   PetFriendlyLevel,
 } from './comment';
+
+export type { UserProfile } from './user';
