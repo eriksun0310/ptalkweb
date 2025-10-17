@@ -1,8 +1,6 @@
 import React from 'react';
 import type { Comment, RelatedCommentsResponse } from '@/shared/types';
-import { VenueInfo } from '@/entities/venue/ui';
 import { CommentCard } from '@/entities/comment/ui';
-import { DownloadCTA } from '@/features/download-app/ui';
 import { RelatedComments } from './RelatedComments';
 
 export interface CommentDetailViewProps {
@@ -18,18 +16,8 @@ export const CommentDetailView: React.FC<CommentDetailViewProps> = ({
     <div className="min-h-screen bg-gray-50 pb-8">
       {/* 主要內容區 */}
       <div className="max-w-2xl mx-auto px-4 pt-20">
-        {/* 店家資訊 */}
-        <VenueInfo venue={comment.venue} className="mb-4" />
-
-        {/* 評論卡片 - 完整版 */}
+        {/* 評論卡片 - 完整版，圖片可放大 */}
         <CommentCard comment={comment} variant="full" className="mb-4" />
-
-        {/* 中間下載 CTA */}
-        <DownloadCTA
-          title="發現更多寵物友善店家"
-          description="下載 PTalk App，探索附近的友善店家"
-          className="mb-6"
-        />
 
         {/* 其他評論 */}
         {relatedComments.items.length > 0 && (

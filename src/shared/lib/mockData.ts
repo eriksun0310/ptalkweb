@@ -116,6 +116,42 @@ export const mockComments: Comment[] = [
         createdBy: 'user1',
         updatedAt: '2025-10-16T00:00:00Z',
         updatedBy: 'user1',
+      }, {
+        id: 'file1',
+        name: 'puppy1.jpg',
+        type: 'image/jpeg',
+        size: 1024000,
+        s3Bucket: 'ptalk-images',
+        s3Key: 'comments/puppy1.jpg',
+        url: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&h=600&fit=crop',
+        uploadDate: '2025-10-16T00:00:00Z',
+        uploadedBy: 'user1',
+        filePurpose: 1,
+        mediaType: 1,
+        usageType: 1,
+        isDeleted: false,
+        createdAt: '2025-10-16T00:00:00Z',
+        createdBy: 'user1',
+        updatedAt: '2025-10-16T00:00:00Z',
+        updatedBy: 'user1',
+      }, {
+        id: 'file1',
+        name: 'puppy1.jpg',
+        type: 'image/jpeg',
+        size: 1024000,
+        s3Bucket: 'ptalk-images',
+        s3Key: 'comments/puppy1.jpg',
+        url: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&h=600&fit=crop',
+        uploadDate: '2025-10-16T00:00:00Z',
+        uploadedBy: 'user1',
+        filePurpose: 1,
+        mediaType: 1,
+        usageType: 1,
+        isDeleted: false,
+        createdAt: '2025-10-16T00:00:00Z',
+        createdBy: 'user1',
+        updatedAt: '2025-10-16T00:00:00Z',
+        updatedBy: 'user1',
       },
     ],
     updateTime: '2025-10-16T00:00:00Z',
@@ -268,5 +304,20 @@ export function getMockUserComments(userId: string, limit: number = 10): Comment
   return {
     items: userComments,
     total: userComments.length,
+  };
+}
+
+// Mock 函數：取得店家資料
+export function getMockVenue(venueId: string): Venue {
+  return mockVenues.find(v => v.id === venueId) || mockVenues[0];
+}
+
+// Mock 函數：取得店家的所有評論
+export function getMockVenueComments(venueId: string, limit: number = 20): CommentListResponse {
+  const venueComments = mockComments.filter(c => c.venue.id === venueId).slice(0, limit);
+
+  return {
+    items: venueComments,
+    total: venueComments.length,
   };
 }

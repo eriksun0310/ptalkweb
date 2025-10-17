@@ -10,7 +10,7 @@ const SocialMediaLinks = ({ variant = 'default' }: SocialMediaLinksProps) => {
   const iconSize = variant === 'small' ? 18 : 22;
   const gap = variant === 'small' ? 16 : 20;
   const padding = variant === 'small' ? 4 : 6;
-  const iconColor = '#f29a2e'; // Colors.logo
+  const iconColor = '#646A6F'; // Colors.logo
 
   const iconStyle = {
     padding: `${padding}px`,

@@ -27,38 +27,23 @@ export const DownloadCTA: React.FC<DownloadCTAProps> = ({
   };
 
   return (
-    <div className={className}>
-      <div className="bg-gradient-to-r from-primary to-blue-600 rounded-xl p-6 text-white text-center">
-        <div className="mb-4">
-          <Download className="w-12 h-12 mx-auto mb-3" />
-          <h3 className="text-h3 font-bold mb-2">{title}</h3>
-          <p className="text-body-small opacity-90">{description}</p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-          {/* iOS 按鈕 */}
-          <a
-            href={getStoreUrl('ios')}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block"
-          >
-            <img
-              src="/images/app-store-badge.png"
-              alt="Download on the App Store"
-              className="h-12"
-              onError={(e) => {
-                // Fallback: 如果圖片不存在，使用純文字按鈕
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.nextElementSibling?.classList.remove('hidden');
-              }}
-            />
-            <Button variant="secondary" className="hidden">
-              App Store
-            </Button>
-          </a>
+    <a
+      href={getStoreUrl(device)}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 hover:bg-gray-100 transition-colors cursor-pointer">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <Download className="w-4 h-4 text-gray-600 flex-shrink-0" />
+            <span className="text-sm text-gray-700 truncate">
+              在 App 中查看完整內容
+            </span>
+          </div>
+          <span className="text-xs text-gray-500 flex-shrink-0">→</span>
         </div>
       </div>
-    </div>
+    </a>
   );
 };

@@ -8,7 +8,7 @@ const Footer = () => {
         width: '100%',
         padding: '24px 16px',
         backgroundColor: '#f8f8f8',
-        borderTop: '1px solid #e5e5e5',
+        // borderTop: '1px solid #e5e5e5',
         marginTop: 'auto',
       }}
     >
@@ -31,7 +31,7 @@ const Footer = () => {
             textAlign: 'center',
           }}
         >
-          © 2024 PTalk. All rights reserved.
+          © 2025 PTalk. All rights reserved.
         </p>
       </div>
     </footer>
