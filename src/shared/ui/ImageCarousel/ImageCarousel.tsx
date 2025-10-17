@@ -26,12 +26,12 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, className 
   return (
     <div className={clsx('relative', className)}>
       {/* 主圖片 */}
-      <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-black">
+      <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-gray-100">
         <Image
           src={images[currentIndex]}
           alt={`圖片 ${currentIndex + 1}`}
           fill
-          className="object-contain"
+          className="object-cover"
           sizes="(max-width: 768px) 100vw, 600px"
           priority={currentIndex === 0}
         />

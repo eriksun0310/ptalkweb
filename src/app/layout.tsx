@@ -16,9 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
-      <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <body className="flex flex-col min-h-screen bg-gray-50">
         <DownloadBanner />
-        <main style={{ flex: 1 }}>{children}</main>
+        <main className="flex-1 w-full max-w-[600px] mx-auto bg-white">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

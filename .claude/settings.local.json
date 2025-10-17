@@ -12,7 +12,10 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nfeat: add footer with social links and refine UI to match mobile app\n\n**New Features:**\n- Add Footer component with social media links (website, email, Instagram, Threads)\n- Add SocialMediaLinks component using FontAwesome icons\n- Replace placeholder app icon with actual appIcon.png in DownloadBanner\n\n**UI Refinements:**\n- Update CommentCard layout to match mobile app:\n  - Show pet breed, category, date, and friendly level in metadata line\n  - Display venue name as bold standalone heading\n  - Change date format from slashes to dashes (YYYY-MM-DD)\n- Simplify CommentImages to show max 3 small thumbnails (96x96px)\n- Make VenueInfo ratings more compact with tighter spacing\n- Update layout.tsx to add footer at bottom of all pages\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git commit:*)",
       "Bash(rm:*)",
-      "Bash(rmdir:*)"
+      "Bash(rmdir:*)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_j9MBSK/**)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_KDE25d/**)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_OWn96J/**)"
     ],
     "deny": [],
     "ask": []

@@ -12,10 +12,10 @@ export default function HomePage() {
   const featuredComments = mockComments.slice(0, 5);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="px-4 py-2.5 flex items-center justify-between">
+      <div className="sticky top-0 z-10">
+        <div className="max-w-[600px] mx-auto bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img
               src="/images/appIcon.png"
@@ -36,43 +36,27 @@ export default function HomePage() {
       </div>
 
       {/* Featured Comments Section */}
-      <div className="px-4 py-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-text-primary">精選評論</h2>
-        </div>
-
+      <div>
         {/* Comments List */}
-        <div className="space-y-4 mb-8">
+        <div>
           {featuredComments.map((comment) => (
             <CommentCard key={comment.id} comment={comment} variant="preview" />
           ))}
         </div>
 
-        {/* App Download Banner */}
-        <div className="border-t border-b border-gray-200 py-4 -mx-4 px-4 bg-gray-50">
-          <div className="flex items-center gap-3">
-            <img
-              src="/images/appIcon.png"
-              alt="PTalk App Icon"
-              className="w-14 h-14 rounded-2xl"
-            />
-            <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-bold text-gray-900 mb-0.5">
-                想看完整內容？
-              </h3>
-              <p className="text-xs text-gray-600">
-                在 PTalk App 探索更多店家
-              </p>
-            </div>
-            <a
-              href="https://ptalk.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-full transition-colors text-sm font-semibold whitespace-nowrap"
-            >
-              下載
-            </a>
-          </div>
+        {/* App Download CTA - 簡潔版 */}
+        <div className="py-8 px-4 text-center">
+          <p className="text-sm text-gray-600 mb-3">
+            在 PTalk App 探索更多店家評論
+          </p>
+          <a
+            href="https://ptalk.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-full transition-colors text-sm font-semibold"
+          >
+            下載 PTalk
+          </a>
         </div>
       </div>
     </div>
