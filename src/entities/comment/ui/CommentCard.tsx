@@ -7,8 +7,8 @@ import type { Comment, CategoryType } from '@/shared/types';
 import { UserAvatar } from '@/entities/user/ui';
 import { RatingDisplay } from './RatingDisplay';
 import { CommentImages } from './CommentImages';
-import { HandWithHeartsIcon } from '@/shared/ui/HandWithHeartsIcon';
 import { getAvatarSource, getUserLevel } from '@/shared/lib/avatar';
+import { getPetFriendlyIcon } from '@/shared/constants/icons';
 import { FaPaw } from 'react-icons/fa';
 import clsx from 'clsx';
 
@@ -110,7 +110,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
             <span>|</span>
             <span>{formattedDate}</span>
             <span>|</span>
-            <HandWithHeartsIcon level={petFriendlyLevel} size={24} />
+            {getPetFriendlyIcon(petFriendlyLevel)}
           </div>
         </div>
       </div>
