@@ -63,12 +63,6 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({ user, comments
           </div>
         )}
 
-        {/* 底部下載 CTA */}
-        {/* <DownloadCTA
-          title="加入 PTalk 社群"
-          description="分享你的寵物友善店家體驗"
-          className="mt-8"
-        /> */}
       </div>
     </div>
   );

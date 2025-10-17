@@ -39,12 +39,6 @@ export const CommentDetailView: React.FC<CommentDetailViewProps> = ({
             className="mb-6"
           />
         )}
-
-        {/* 底部下載 CTA */}
-        {/* <DownloadCTA
-          title="加入 PTalk 社群"
-          description="分享你的寵物友善店家體驗"
-        /> */}
       </div>
     </div>
   );

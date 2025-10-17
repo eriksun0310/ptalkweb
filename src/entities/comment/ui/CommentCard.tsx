@@ -40,11 +40,8 @@ export const CommentCard: React.FC<CommentCardProps> = ({
     isPreview && content.length > 100 ? `${content.substring(0, 100)}...` : content;
 
   // 格式化日期
-  const formattedDate = new Date(updateTime).toLocaleDateString('zh-TW', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  });
+  const date = new Date(updateTime);
+  const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
   // 獲取用戶等級（假設從 commentCount 計算，這裡暫時寫死）
   const userLevel = getUserLevel(23); // 先寫死，實際應該從 API 取得
@@ -82,11 +79,6 @@ export const CommentCard: React.FC<CommentCardProps> = ({
         className
       )}
     >
-      {/* 右上角評論等級圖示 */}
-      <div className="absolute top-4 right-4">
-        <HandWithHeartsIcon level={petFriendlyLevel} size={24} />
-      </div>
-
       {/* Header: 用戶資訊 */}
       <div className="flex items-start gap-3 mb-3">
         <UserAvatar src={avatarSrc} alt={reviewer.name} size="md" />
@@ -100,18 +92,23 @@ export const CommentCard: React.FC<CommentCardProps> = ({
             </div>
           </div>
 
-          {/* 第二行：店家名稱 | 分類 | 日期 | 評分badge */}
+          {/* 第二行：寵物品種 | 分類 | 日期 | 友善程度 */}
           <div className="flex items-center gap-2 text-xs text-gray-600 flex-wrap">
-            <span>{venue.name}</span>
+            <span>{petInfo.breed}</span>
             <span>|</span>
             <span>{getCategoryName(venue.categoryType)}</span>
             <span>|</span>
             <span>{formattedDate}</span>
             <span>|</span>
-            <RatingDisplay rating={feedback.rating} feedbackType={feedback.type} size="sm" showLabel={false} />
+            <HandWithHeartsIcon level={petFriendlyLevel} size={24} />
           </div>
         </div>
       </div>
+
+      {/* 店家名稱 - 粗體單獨一行 */}
+      <h3 className="font-bold text-base text-gray-900 mb-2">
+        {venue.name}
+      </h3>
 
       {/* Content */}
       <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap mb-3">

@@ -44,33 +44,33 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
       </div>
 
       {/* 店家資訊 */}
-      <div className="p-4 space-y-3">
-        <h1 className="text-xl font-bold text-gray-900">{venue.name}</h1>
+      <div className="p-4 space-y-2">
+        <h1 className="text-xl font-bold text-gray-900 mb-3">{venue.name}</h1>
 
         {/* 抓抓評分 */}
-        <div className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-gray-900 w-12">
+        <div className="flex items-center gap-1.5">
+          <span className="text-xl font-bold text-gray-900 w-10">
             {venue.pawRating.toFixed(1)}
           </span>
-          <div className="flex gap-1">
+          <div className="flex gap-0.5">
             {renderRatingIcons(venue.pawRating, 'paw')}
           </div>
-          <span className="text-sm text-gray-600">({venue.pawCount})</span>
+          <span className="text-xs text-gray-600 ml-0.5">({venue.pawCount})</span>
         </div>
 
         {/* 便便評分 */}
-        <div className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-gray-900 w-12">
+        <div className="flex items-center gap-1.5">
+          <span className="text-xl font-bold text-gray-900 w-10">
             {venue.poopRating.toFixed(1)}
           </span>
-          <div className="flex gap-1">
+          <div className="flex gap-0.5">
             {renderRatingIcons(venue.poopRating, 'poop')}
           </div>
-          <span className="text-sm text-gray-600">({venue.poopCount})</span>
+          <span className="text-xs text-gray-600 ml-0.5">({venue.poopCount})</span>
         </div>
 
         {/* 地址 */}
-        <div className="flex items-start gap-2 text-gray-600 pt-2">
+        <div className="flex items-start gap-2 text-gray-600 pt-1">
           <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
           <span className="text-sm leading-snug">{venue.address}</span>
         </div>

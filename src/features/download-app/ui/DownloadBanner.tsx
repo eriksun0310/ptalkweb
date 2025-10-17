@@ -27,9 +27,11 @@ export const DownloadBanner: React.FC = () => {
       <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
         {/* Logo 和文字 */}
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
-            <span className="text-white text-xl font-bold">P</span>
-          </div>
+          <img
+            src="/images/appIcon.png"
+            alt="PTalk App Icon"
+            className="w-10 h-10 rounded-lg flex-shrink-0"
+          />
           <div className="min-w-0">
             <p className="text-body-small font-semibold text-text-primary truncate">PTalk</p>
             <p className="text-caption text-text-secondary truncate">

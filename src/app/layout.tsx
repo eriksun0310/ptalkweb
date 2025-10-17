@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { DownloadBanner } from '@/features/download-app/ui';
+import { Footer } from '@/shared/ui/Footer';
 import '../../styles/globals.css';
 
 export const metadata: Metadata = {
@@ -15,9 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
-      <body>
+      <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <DownloadBanner />
-        {children}
+        <main style={{ flex: 1 }}>{children}</main>
+        <Footer />
       </body>
     </html>
   );
