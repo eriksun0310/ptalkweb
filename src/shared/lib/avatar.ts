@@ -27,11 +27,3 @@ export const getAvatarSource = ({
   );
 };
 
-// 獲取用戶等級（根據評論數量計算爪子數量）
-export const getUserLevel = (commentCount: number): number => {
-  if (commentCount >= 100) return 5;
-  if (commentCount >= 50) return 4;
-  if (commentCount >= 20) return 3;
-  if (commentCount >= 5) return 2;
-  return 1;
-};

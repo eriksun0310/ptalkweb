@@ -7,7 +7,7 @@ import type { Comment, CategoryType } from '@/shared/types';
 import { UserAvatar } from '@/entities/user/ui';
 import { RatingDisplay } from './RatingDisplay';
 import { CommentImages } from './CommentImages';
-import { getAvatarSource, getUserLevel } from '@/shared/lib/avatar';
+import { getAvatarSource } from '@/shared/lib/avatar';
 import { getPetFriendlyIcon } from '@/shared/constants/icons';
 import { FaPaw } from 'react-icons/fa';
 import clsx from 'clsx';
@@ -58,24 +58,23 @@ export const CommentCard: React.FC<CommentCardProps> = ({
   const date = new Date(updateTime);
   const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
-  // 獲取用戶等級（假設從 commentCount 計算，這裡暫時寫死）
-  const userLevel = getUserLevel(23); // 先寫死，實際應該從 API 取得
+  // 渲染評論評分（1-5 顆爪子/便便）
+  const renderRatingIcons = () => {
+    const icons = [];
+    const rating = Math.round(feedback.rating); // 取整數評分
 
-  // 渲染用戶等級爪子
-  const renderUserLevelPaws = () => {
-    const paws = [];
-    for (let i = 0; i < userLevel; i++) {
-      paws.push(
+    for (let i = 0; i < rating; i++) {
+      icons.push(
         <FaPaw key={i} className="w-4 h-4 text-[#FFB800]" />
       );
     }
-    // 補齊灰色爪子到5個
-    for (let i = userLevel; i < 5; i++) {
-      paws.push(
-        <FaPaw key={i} className="w-4 h-4 text-gray-300" />
+    // 補齊灰色圖示到5個
+    for (let i = rating; i < 5; i++) {
+      icons.push(
+        <FaPaw key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
       );
     }
-    return paws;
+    return icons;
   };
 
   // 獲取頭像
@@ -98,7 +97,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
               <span className="font-semibold text-gray-900">{reviewer.name}</span>
             </Link>
             <div className="flex gap-0.5">
-              {renderUserLevelPaws()}
+              {renderRatingIcons()}
             </div>
           </div>
 
