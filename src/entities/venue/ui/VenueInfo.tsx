@@ -48,33 +48,34 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
         <h1 className="text-2xl font-bold text-gray-900 mb-2">{venue.name}</h1>
 
         {/* 評分行 */}
-        <div className="flex items-center gap-4 mb-2">
+        <div className="flex items-center gap-3 mb-2">
           {/* 抓抓評分 */}
           <div className="flex items-center gap-1">
-            <span className="text-lg font-bold text-gray-900">
+            <span className="text-base font-bold text-gray-900">
               {venue.pawRating.toFixed(1)}
             </span>
             <div className="flex gap-0.5">
               {renderRatingIcons(venue.pawRating, 'paw')}
             </div>
-            <span className="text-xs text-gray-600">({venue.pawCount})</span>
+            <span className="text-xs text-gray-500">({venue.pawCount})</span>
           </div>
 
           {/* 便便評分 */}
           <div className="flex items-center gap-1">
-            <span className="text-lg font-bold text-gray-900">
+            <span className="text-base font-bold text-gray-900">
               {venue.poopRating.toFixed(1)}
             </span>
             <div className="flex gap-0.5">
               {renderRatingIcons(venue.poopRating, 'poop')}
             </div>
-            <span className="text-xs text-gray-600">({venue.poopCount})</span>
+            <span className="text-xs text-gray-500">({venue.poopCount})</span>
           </div>
         </div>
 
         {/* 營業狀態 */}
-        <div className="text-sm text-green-600 font-medium mb-2">
-          營業中 · 開放營業時間：11:00
+        <div className="text-sm mb-2">
+          <span className="text-green-600 font-medium">營業中</span>
+          <span className="text-gray-600"> · 開放營業時間：11:00</span>
         </div>
 
         {/* 地址 */}
