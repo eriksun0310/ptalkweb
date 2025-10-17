@@ -1,9 +1,6 @@
 import { Metadata } from 'next';
-import { DownloadCTA } from '@/features/download-app/ui';
 import { CommentCard } from '@/entities/comment/ui';
 import { mockComments } from '@/shared/lib/mockData';
-import { FaPaw } from 'react-icons/fa';
-import { MapPin, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'PTalk - 發現寵物友善店家 | 真實評論分享平台',

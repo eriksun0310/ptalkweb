@@ -2,7 +2,6 @@ import React from 'react';
 import type { CommentListResponse } from '@/shared/types';
 import { UserAvatar } from '@/entities/user/ui';
 import { CommentCard } from '@/entities/comment/ui';
-import { DownloadCTA } from '@/features/download-app/ui';
 
 export interface UserProfileViewProps {
   user: {
