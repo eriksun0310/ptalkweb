@@ -46,7 +46,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
       if (target.closest('a')) {
         return;
       }
-      router.push(`/r/${id}`);
+      router.push(`/comment/${id}`);
     }
   };
 
@@ -93,7 +93,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
         <UserAvatar src={avatarSrc} alt={reviewer.name} size="md" />
         <div className="flex-1 pr-10">
           <div className="flex items-center gap-2 mb-1">
-            <Link href={`/u/${reviewer.userId}`} className="hover:underline">
+            <Link href={`/user/${reviewer.userId}`} className="hover:underline">
               <span className="font-semibold text-gray-900">{reviewer.name}</span>
             </Link>
             <div className="flex gap-0.5">
@@ -115,7 +115,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
       </div>
 
       {/* 店家名稱 - 粗體單獨一行，可點擊跳轉 */}
-      <Link href={`/v/${venue.id}`}>
+      <Link href={`/venue/${venue.id}`}>
         <h3 className="font-bold text-base text-gray-900 mb-2 hover:text-primary cursor-pointer">
           {venue.name}
         </h3>

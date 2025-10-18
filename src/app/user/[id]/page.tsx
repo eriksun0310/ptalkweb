@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       ],
       type: 'profile',
-      url: `https://ptalk.app/u/${params.id}`,
+      url: `https://ptalk.app/user/${params.id}`,
     },
     twitter: {
       card: 'summary',

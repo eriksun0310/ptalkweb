@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       ],
       type: 'article',
-      url: `https://ptalk.app/r/${params.id}`,
+      url: `https://ptalk.app/comment/${params.id}`,
     },
     twitter: {
       card: 'summary_large_image',
