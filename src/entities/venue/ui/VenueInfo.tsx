@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image } from '@/shared/ui/Image';
 import type { Venue } from '@/shared/types';
-import { MapPin } from 'lucide-react';
 import { FaPaw, FaPoop } from 'react-icons/fa';
 import clsx from 'clsx';
 
@@ -51,11 +50,11 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
       )}
 
       {/* 店家資訊 */}
-      <div className="px-4 py-4 border-b border-gray-200">
+      <div className="px-4 py-4">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">{venue.name}</h1>
 
         {/* 評分行 */}
-        <div className="flex items-center gap-3 mb-2">
+        <div className="flex  mb-2 flex-col">
           {/* 抓抓評分 */}
           <div className="flex items-center gap-1">
             <span className="text-base font-bold text-gray-900">
@@ -80,18 +79,10 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
         </div>
 
         {/* 營業狀態 */}
-        <div className="text-sm mb-2">
+        <div className="text-sm">
           <span className="text-green-600 font-medium">營業中</span>
           <span className="text-gray-600"> · 開放營業時間：11:00</span>
         </div>
-
-        {/* 地址 */}
-        {venue.address && (
-          <div className="flex items-start gap-2 text-gray-700">
-            <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-            <span className="text-sm">{venue.address}</span>
-          </div>
-        )}
       </div>
     </div>
   );
