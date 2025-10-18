@@ -31,7 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ],
       }),
       type: 'website',
-      url: `https://ptalk.app/venue/${params.id}`,
+      siteName: 'PTalk',
+      url: `https://ptalkweb.vercel.app/venue/${params.id}`,
     },
     twitter: {
       card: 'summary_large_image',

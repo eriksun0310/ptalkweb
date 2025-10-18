@@ -25,6 +25,21 @@ const nextConfig = {
   // 啟用 SWC minify
   swcMinify: true,
 
+  // Universal Links 設定
+  async headers() {
+    return [
+      {
+        source: '/.well-known/apple-app-site-association',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/json',
+          },
+        ],
+      },
+    ];
+  },
+
   // 輸出為 standalone（適用於 Docker 部署）
   // output: 'standalone',
 };

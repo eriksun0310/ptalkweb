@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "4W5HHJ324C.com.ptalk.app",
+        "paths": [
+          "/comment/*",
+          "/user/*",
+          "/venue/*"
+        ]
+      }
+    ]
+  }
+}

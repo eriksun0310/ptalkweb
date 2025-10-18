@@ -15,7 +15,19 @@
       "Bash(rmdir:*)",
       "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_j9MBSK/**)",
       "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_KDE25d/**)",
-      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_OWn96J/**)"
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_OWn96J/**)",
+      "Bash(pnpm build:*)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_NnMaX1/**)",
+      "Bash(pnpm dev)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_QLbd9U/**)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_dmeGYb/**)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_bPxkFt/**)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_PENodS/**)",
+      "Read(//Users/jiayu/Downloads/iloveimg-compressed/**)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_hWtaK2/**)",
+      "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_p8RgHo/**)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
