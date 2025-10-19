@@ -140,8 +140,8 @@ export const CommentCard: React.FC<CommentCardProps> = ({
     <div
       onClick={handleCardClick}
       className={clsx(
-        'bg-white border-b border-gray-200 p-4 relative',
-        isPreview && 'cursor-pointer',
+        'bg-white p-4 relative border-b border-gray-100',
+        isPreview && 'cursor-pointer active:bg-gray-50 transition-colors',
         className
       )}
     >

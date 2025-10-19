@@ -1,6 +1,8 @@
 // API Client - Fetch wrapper with error handling
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://dev.pettalk.moushih.com/api';
+// 使用 Next.js API Route 作為代理，解決 CORS 問題
+// 開發環境使用本地代理，生產環境可以設定環境變數
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 export class APIError extends Error {
   constructor(

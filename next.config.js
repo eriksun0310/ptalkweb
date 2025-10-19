@@ -7,6 +7,7 @@ const nextConfig = {
       'dev.pettalk.moushih.com',
       'images.unsplash.com',
       'i.pravatar.cc',
+      'dev-ptalk.s3.ap-east-2.amazonaws.com', // AWS S3 圖片網域
     ],
     formats: ['image/avif', 'image/webp'],
   },

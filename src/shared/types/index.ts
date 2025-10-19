@@ -24,3 +24,5 @@ export {
 } from './comment';
 
 export type { UserProfile } from './user';
+
+export type { PaginationParams, PaginatedResponse } from './api';

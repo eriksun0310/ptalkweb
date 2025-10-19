@@ -27,7 +27,9 @@
       "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_hWtaK2/**)",
       "Read(//var/folders/n0/zlqgqf5s6fl1lcf_xrx417dm0000gn/T/TemporaryItems/NSIRD_screencaptureui_p8RgHo/**)",
       "Bash(mkdir:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(git push)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

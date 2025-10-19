@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { AppHeader } from '@/shared/ui/AppHeader';
 import { Footer } from '@/shared/ui/Footer';
+import { QueryProvider } from '@/shared/providers';
 import '../../styles/globals.css';
 
 export const metadata: Metadata = {
@@ -17,11 +18,13 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <body className="flex flex-col min-h-screen bg-gray-50">
-        <AppHeader />
-        <main className="flex-1 w-full max-w-[600px] mx-auto bg-white min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        <QueryProvider>
+          <AppHeader />
+          <main className="flex-1 w-full max-w-[600px] mx-auto bg-white min-h-screen">
+            {children}
+          </main>
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );
