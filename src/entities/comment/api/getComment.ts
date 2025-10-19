@@ -9,7 +9,7 @@ import type { Comment, RelatedCommentsResponse } from '@/shared/types';
  * @returns Comment
  */
 export async function getComment(id: string): Promise<Comment> {
-  return get<Comment>(`/comments/${id}`);
+  return get<Comment>(`/comment/${id}`);
 }
 
 /**

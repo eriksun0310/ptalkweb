@@ -1,52 +1,50 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useParams } from 'next/navigation';
 import { CommentDetailView } from '@/widgets/comment-detail/ui';
-import { getMockComment, getMockRelatedComments } from '@/shared/lib/mockData';
+import { useComment } from '@/shared/hooks';
 
-type Props = {
-  params: { id: string };
-};
+export default function CommentDetailPage() {
+  const params = useParams();
+  const id = params.id as string;
 
-// 產生 Metadata（Open Graph）
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  // 使用 Mock 資料
-  const comment = getMockComment(params.id);
+  const { comment, isLoading, isError, error } = useComment(id);
 
-  const title = `${comment.reviewer.name} 在 ${comment.venue.name} 的評價 | PTalk`;
-  const description = comment.content.substring(0, 100) + (comment.content.length > 100 ? '...' : '');
-  const imageUrl = comment.files[0]?.url || comment.venue.mainImage || '';
+  // 載入中狀態
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600">載入中...</p>
+        </div>
+      </div>
+    );
+  }
 
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${comment.reviewer.name} 在 ${comment.venue.name} 的評價`,
-        },
-      ],
-      type: 'article',
-      siteName: 'PTalk',
-      url: `https://ptalkweb.vercel.app/comment/${params.id}`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [imageUrl],
-    },
-  };
-}
+  // 錯誤狀態
+  if (isError || !comment) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center px-4">
+          <div className="text-6xl mb-4">❌</div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            載入失敗
+          </h2>
+          <p className="text-gray-600 mb-4">
+            {error instanceof Error ? error.message : '找不到此評論'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full transition-colors"
+          >
+            重新載入
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-// Server Component - 使用 Mock 資料
-export default async function CommentDetailPage({ params }: Props) {
-  // 使用 Mock 資料替代 API 請求
-  const comment = getMockComment(params.id);
-  const relatedComments = getMockRelatedComments(params.id, 5);
-
-  return <CommentDetailView comment={comment} relatedComments={relatedComments} />;
+  // 暫時不顯示相關評論，等之後實作
+  return <CommentDetailView comment={comment} relatedComments={[]} />;
 }
