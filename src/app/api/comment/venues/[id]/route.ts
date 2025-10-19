@@ -46,18 +46,21 @@ export async function GET(
 
     const apiResponse = await response.json();
 
-    // 解開 API 回傳的包裝結構
-    // API 回傳: { success: true, data: { items: [...], totalCount: 123 } }
-    // 前端期待: { items: [...], total: 123 }
-    const data = {
-      items: apiResponse.data?.items || [],
-      total: apiResponse.data?.totalCount || 0,
+    // 解開 API 回傳的包裝結構，保留完整分頁資訊
+    // API 回傳: { success: true, data: { items: [...], totalCount, pageCount, currentPage, pageSize } }
+    const data = apiResponse.data || {
+      items: [],
+      totalCount: 0,
+      pageCount: null,
+      currentPage: 1,
+      pageSize: parseInt(pageSize),
     };
 
     console.log('返回店家評論資料:', {
       venueId: id,
       itemsCount: data.items.length,
-      total: data.total,
+      totalCount: data.totalCount,
+      currentPage: data.currentPage,
     });
 
     // 返回資料，並設定 CORS 標頭

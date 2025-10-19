@@ -9,7 +9,7 @@ export default function VenueDetailPage() {
   const id = params.id as string;
 
   const { venue, isLoading: isLoadingVenue, isError: isErrorVenue, error: venueError } = useVenue(id);
-  const { comments, total, isLoading: isLoadingComments } = useVenueComments(id, 20);
+  const { comments, totalCount, isLoading: isLoadingComments } = useVenueComments(id, 20);
 
   // 載入中狀態
   if (isLoadingVenue || isLoadingComments) {
@@ -50,7 +50,7 @@ export default function VenueDetailPage() {
     <VenueDetailView
       venue={venue}
       comments={comments}
-      total={total}
+      totalCount={totalCount}
     />
   );
 }

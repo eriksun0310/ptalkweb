@@ -36,7 +36,7 @@ export function useComments(pageSize: number = 10) {
       );
 
       // 如果已載入數量小於總數，返回下一頁頁碼
-      if (loadedCount < lastPage.total) {
+      if (loadedCount < lastPage.totalCount) {
         return allPages.length + 1;
       }
 
@@ -51,13 +51,13 @@ export function useComments(pageSize: number = 10) {
     data?.pages.flatMap((page) => page.items) ?? [];
 
   // 總評論數
-  const total = data?.pages[0]?.total ?? 0;
+  const totalCount = data?.pages[0]?.totalCount ?? 0;
 
   return {
     /** 評論列表 */
     comments,
     /** 總評論數 */
-    total,
+    totalCount,
     /** 是否正在載入初始資料 */
     isLoading,
     /** 是否發生錯誤 */

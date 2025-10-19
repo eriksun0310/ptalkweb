@@ -9,7 +9,7 @@ export default function UserProfilePage() {
   const id = params.id as string;
 
   const { user, isLoading: isLoadingUser, isError: isErrorUser, error: userError } = useUser(id);
-  const { comments, total, isLoading: isLoadingComments } = useUserComments(id, 15);
+  const { comments, totalCount, isLoading: isLoadingComments } = useUserComments(id, 15);
 
   // 載入中狀態
   if (isLoadingUser || isLoadingComments) {
@@ -50,7 +50,7 @@ export default function UserProfilePage() {
     <UserProfileView
       user={user}
       comments={comments}
-      total={total}
+      totalCount={totalCount}
     />
   );
 }

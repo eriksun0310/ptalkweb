@@ -4,13 +4,13 @@ import { CommentCard } from '@/entities/comment/ui';
 
 export interface RelatedCommentsProps {
   comments: Comment[];
-  total: number;
+  totalCount: number;
   className?: string;
 }
 
 export const RelatedComments: React.FC<RelatedCommentsProps> = ({
   comments,
-  total,
+  totalCount,
   className,
 }) => {
   if (!comments || comments.length === 0) return null;
@@ -19,7 +19,7 @@ export const RelatedComments: React.FC<RelatedCommentsProps> = ({
     <div className={className}>
       <div className="flex items-baseline justify-between mb-4">
         <h2 className="text-h3 font-bold text-text-primary">其他人怎麼說</h2>
-        <span className="text-body-small text-text-secondary">共 {total} 則評論</span>
+        <span className="text-body-small text-text-secondary">共 {totalCount} 則評論</span>
       </div>
 
       <div className="space-y-4">
@@ -29,10 +29,10 @@ export const RelatedComments: React.FC<RelatedCommentsProps> = ({
       </div>
 
       {/* 查看更多提示 */}
-      {total > comments.length && (
+      {totalCount > comments.length && (
         <div className="mt-6 p-5 bg-gray-50 rounded-xl text-center border border-gray-100">
           <p className="text-sm text-gray-700 mb-3">
-            還有 <span className="font-semibold text-gray-900">{total - comments.length}</span> 則評論
+            還有 <span className="font-semibold text-gray-900">{totalCount - comments.length}</span> 則評論
           </p>
           <a
             href="https://ptalk.app"

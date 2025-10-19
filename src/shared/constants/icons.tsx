@@ -4,7 +4,11 @@ import HandWithHeartsIconLow from '@/shared/ui/svg/HandWithHeartsIconLow';
 import HandWithHeartsIconMedium from '@/shared/ui/svg/HandWithHeartsIconMedium';
 import HandWithHeartsIconHight from '@/shared/ui/svg/HandWithHeartsIconHight';
 
-export const getPetFriendlyIcon = (petFriendlyLevel: PetFriendlyLevel) => {
+export const getPetFriendlyIcon = (petFriendlyLevel: PetFriendlyLevel | null) => {
+  if (petFriendlyLevel === null) {
+    return null; // 如果沒有評級，不顯示圖示
+  }
+
   switch (petFriendlyLevel) {
     case PetFriendlyLevel.Low:
       return <HandWithHeartsIconLow />; // Red

@@ -25,13 +25,19 @@ export function useVenueComments(venueId: string, pageSize: number = 10) {
   });
 
   const comments: Comment[] = data?.items || [];
-  const total = data?.total || 0;
+  const totalCount = data?.totalCount || 0;
 
   return {
     /** 評論列表 */
     comments,
     /** 總評論數 */
-    total,
+    totalCount,
+    /** 總頁數 */
+    pageCount: data?.pageCount || null,
+    /** 當前頁碼 */
+    currentPage: data?.currentPage || 1,
+    /** 每頁筆數 */
+    pageSize: data?.pageSize || pageSize,
     /** 是否正在載入 */
     isLoading,
     /** 是否發生錯誤 */

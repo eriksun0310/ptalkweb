@@ -90,7 +90,7 @@ export interface Comment {
   reviewer: Reviewer;
   venue: Venue;
   petInfo: PetInfo;
-  petFriendlyLevel: PetFriendlyLevel;
+  petFriendlyLevel: PetFriendlyLevel | null;
   feedback: Feedback;
   content: string;
   files: FileInfo[];
@@ -99,10 +99,16 @@ export interface Comment {
 
 export interface CommentListResponse {
   items: Comment[];
-  total: number;
+  totalCount: number;
+  pageCount: number | null;
+  currentPage: number;
+  pageSize: number;
 }
 
 export interface RelatedCommentsResponse {
   items: Comment[];
-  total: number;
+  totalCount: number;
+  pageCount: number | null;
+  currentPage: number;
+  pageSize: number;
 }

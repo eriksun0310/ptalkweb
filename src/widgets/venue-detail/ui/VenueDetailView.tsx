@@ -12,13 +12,13 @@ import { MapPin } from 'lucide-react';
 export interface VenueDetailViewProps {
   venue: Venue;
   comments: Comment[];
-  total: number;
+  totalCount: number;
 }
 
 export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
   venue,
   comments,
-  total,
+  totalCount,
 }) => {
   const [activeTab, setActiveTab] = useState('overview');
 

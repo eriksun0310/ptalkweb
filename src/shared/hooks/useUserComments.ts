@@ -28,7 +28,13 @@ export function useUserComments(userId: string, pageSize: number = 15) {
     /** 評論列表 */
     comments: data?.items || [],
     /** 總評論數 */
-    total: data?.totalCount || 0,
+    totalCount: data?.totalCount || 0,
+    /** 總頁數 */
+    pageCount: data?.pageCount || null,
+    /** 當前頁碼 */
+    currentPage: data?.currentPage || 1,
+    /** 每頁筆數 */
+    pageSize: data?.pageSize || pageSize,
     /** 是否正在載入 */
     isLoading,
     /** 是否發生錯誤 */

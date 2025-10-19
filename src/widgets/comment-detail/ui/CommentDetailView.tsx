@@ -22,7 +22,7 @@ export const CommentDetailView: React.FC<CommentDetailViewProps> = ({
         <div className="px-4 py-4">
           <RelatedComments
             comments={relatedComments.items}
-            total={relatedComments.total}
+            totalCount={relatedComments.totalCount}
           />
         </div>
       )}

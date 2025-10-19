@@ -45,17 +45,20 @@ export const mockVenues: Venue[] = [
       lat: 25.033,
       lng: 121.5654,
     },
-    description: '寵物友善餐廳，提供優質的寵物友善環境',
-    createTime: '2024-01-01T00:00:00Z',
-    updateTime: '2025-10-16T00:00:00Z',
-    // Web 端額外欄位
     address: '高雄市 三民區 高雄市三民區明吉路 11 號',
-    pawRating: 4.0,
-    pawCount: 1,
-    poopRating: 0.0,
-    poopCount: 0,
-    mainImage: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=600&fit=crop',
-  },
+    images: ['https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=600&fit=crop'],
+    openingHours: [],
+    ratingSummary: {
+      positive: { rating: 4.0, count: 1 },
+      negative: { rating: 0.0, count: 0 },
+      distribution: {
+        positive: { '1': 0, '2': 0, '3': 0, '4': 0, '5': 1 },
+        negative: { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 },
+      },
+    },
+    status: { open: true, openingTime: '11:00' },
+    actions: { edit: false, bookmark: true },
+  } as Venue,
   {
     id: 'venue2',
     name: '貓狗好朋友咖啡廳',
@@ -64,17 +67,20 @@ export const mockVenues: Venue[] = [
       lat: 25.033,
       lng: 121.5654,
     },
-    description: '友善的寵物咖啡廳',
-    createTime: '2024-01-01T00:00:00Z',
-    updateTime: '2025-10-16T00:00:00Z',
-    // Web 端額外欄位
     address: '台北市大安區和平東路二段 123 號',
-    pawRating: 4.8,
-    pawCount: 127,
-    poopRating: 0,
-    poopCount: 0,
-    mainImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop',
-  },
+    images: ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop'],
+    openingHours: [],
+    ratingSummary: {
+      positive: { rating: 4.8, count: 127 },
+      negative: { rating: 0, count: 0 },
+      distribution: {
+        positive: { '1': 0, '2': 0, '3': 5, '4': 22, '5': 100 },
+        negative: { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 },
+      },
+    },
+    status: { open: true, openingTime: '09:00' },
+    actions: { edit: false, bookmark: true },
+  } as Venue,
 ];
 
 // Mock 評論資料
@@ -271,9 +277,14 @@ export function getMockRelatedComments(commentId: string, limit: number = 5): Re
     .filter(c => c.id !== commentId && c.venue.id === comment.venue.id)
     .slice(0, limit);
 
+  const totalCount = (comment.venue.ratingSummary?.positive?.count || 0) + (comment.venue.ratingSummary?.negative?.count || 0) - 1;
+
   return {
     items: related,
-    total: (comment.venue.pawCount || 0) + (comment.venue.poopCount || 0) - 1,
+    totalCount,
+    pageCount: null,
+    currentPage: 1,
+    pageSize: limit,
   };
 }
 
@@ -303,7 +314,10 @@ export function getMockUserComments(userId: string, limit: number = 10): Comment
 
   return {
     items: userComments,
-    total: userComments.length,
+    totalCount: userComments.length,
+    pageCount: null,
+    currentPage: 1,
+    pageSize: limit,
   };
 }
 
@@ -318,6 +332,9 @@ export function getMockVenueComments(venueId: string, limit: number = 20): Comme
 
   return {
     items: venueComments,
-    total: venueComments.length,
+    totalCount: venueComments.length,
+    pageCount: null,
+    currentPage: 1,
+    pageSize: limit,
   };
 }
