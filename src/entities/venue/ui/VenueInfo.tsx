@@ -28,18 +28,18 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
     return icons;
   };
 
-  const pawRating = venue.pawRating ?? 0;
-  const pawCount = venue.pawCount ?? 0;
-  const poopRating = venue.poopRating ?? 0;
-  const poopCount = venue.poopCount ?? 0;
+  const pawRating = venue.ratingSummary.positive.rating;
+  const pawCount = venue.ratingSummary.positive.count;
+  const poopRating = venue.ratingSummary.negative.rating;
+  const poopCount = venue.ratingSummary.negative.count;
 
   return (
     <div className={clsx('bg-white', className)}>
       {/* 店家圖片 - 全寬 */}
-      {venue.mainImage && (
+      {venue.images && venue.images.length > 0 && (
         <div className="relative w-full aspect-video">
           <Image
-            src={venue.mainImage}
+            src={venue.images[0]}
             alt={venue.name}
             fill
             className="object-cover"

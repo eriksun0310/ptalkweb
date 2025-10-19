@@ -8,6 +8,7 @@ const nextConfig = {
       'images.unsplash.com',
       'i.pravatar.cc',
       'dev-ptalk.s3.ap-east-2.amazonaws.com', // AWS S3 圖片網域
+      'lh3.googleusercontent.com', // Google 圖片網域
     ],
     formats: ['image/avif', 'image/webp'],
   },

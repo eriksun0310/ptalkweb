@@ -1,12 +1,12 @@
-// Next.js API Route - 代理店家詳情請求，解決 CORS 問題
+// Next.js API Route - 代理使用者請求，解決 CORS 問題
 
 import { NextRequest, NextResponse } from 'next/server';
 
 const API_BASE_URL = 'https://dev.api.pettalk.moushih.com/api';
 
 /**
- * GET /api/venue/[id]
- * 代理店家詳情請求到後端 API
+ * GET /api/user/[id]
+ * 代理使用者資料請求到後端 API
  */
 export async function GET(
   request: NextRequest,
@@ -16,9 +16,9 @@ export async function GET(
     const { id } = params;
 
     // 建立完整的 API URL
-    const apiUrl = `${API_BASE_URL}/venue/${id}`;
+    const apiUrl = `${API_BASE_URL}/user/${id}`;
 
-    console.log('代理請求（店家詳情）:', apiUrl);
+    console.log('代理請求（使用者資料）:', apiUrl);
 
     // 向後端 API 發送請求
     const response = await fetch(apiUrl, {
@@ -40,27 +40,26 @@ export async function GET(
     const apiResponse = await response.json();
 
     // 解開 API 回傳的包裝結構
-    // API 回傳: { success: true, data: { items: [{...}] } }
+    // API 回傳: { success: true, data: {...} }
     // 前端期待: {...}
-    const venueData = apiResponse.data?.items?.[0] || null;
+    const userData = apiResponse.data || null;
 
-    if (!venueData) {
+    if (!userData) {
       return NextResponse.json(
-        { error: '找不到店家資料' },
+        { error: '找不到使用者資料' },
         { status: 404 }
       );
     }
 
     // 直接返回後端資料，不做任何轉換
-    console.log('返回店家資料:', {
-      id: venueData.id,
-      name: venueData.name,
-      hasImages: venueData.images?.length > 0,
-      hasRatingSummary: !!venueData.ratingSummary,
+    console.log('返回使用者資料:', {
+      id: userData.id,
+      name: userData.name,
+      hasPetInfo: !!userData.petInfo,
     });
 
     // 返回資料，並設定 CORS 標頭
-    return NextResponse.json(venueData, {
+    return NextResponse.json(userData, {
       status: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -78,7 +77,7 @@ export async function GET(
 }
 
 /**
- * OPTIONS /api/venue/[id]
+ * OPTIONS /api/user/[id]
  * 處理 CORS preflight 請求
  */
 export async function OPTIONS() {

@@ -29,16 +29,32 @@ export const RatingSummary: React.FC<RatingSummaryProps> = ({
   poopDistribution,
   className,
 }) => {
-  // 渲染評分條形圖
+  // 渲染評分條形圖（採用 App 版本的計算邏輯）
   const renderRatingBars = (distribution: RatingDistribution, type: 'paw' | 'poop') => {
-    const maxCount = Math.max(...Object.values(distribution));
     const barColor = type === 'paw' ? 'bg-[#FFB800]' : 'bg-gray-400';
+
+    // 計算總評論數（與 App 版本一致）
+    const totalReviews = distribution
+      ? Object.values(distribution).reduce((sum, count) => sum + count, 0)
+      : 0;
+
+    // 計算每個評分的百分比（與 App 版本一致）
+    const getPercentage = (rating: number) => {
+      // 如果總評論數為 0，所有進度條都應該是 0%
+      if (totalReviews === 0) {
+        return 0;
+      }
+
+      const count = distribution[rating as keyof RatingDistribution];
+      const percentage = (count / totalReviews) * 100;
+      return percentage;
+    };
 
     return (
       <div className="flex-1 space-y-1">
         {[5, 4, 3, 2, 1].map((rating) => {
           const count = distribution[rating as keyof RatingDistribution];
-          const percentage = maxCount > 0 ? (count / maxCount) * 100 : 0;
+          const percentage = getPercentage(rating);
 
           return (
             <div key={rating} className="flex items-center gap-2 text-xs">

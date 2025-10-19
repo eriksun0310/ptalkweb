@@ -13,26 +13,70 @@ export interface Location {
   lng: number;
 }
 
+// 評分分佈
+export interface RatingDistribution {
+  '1': number;
+  '2': number;
+  '3': number;
+  '4': number;
+  '5': number;
+}
+
+// 評分摘要（與 API 結構一致）
+export interface RatingSummary {
+  positive: {
+    rating: number;
+    count: number;
+  };
+  negative: {
+    rating: number;
+    count: number;
+  };
+  distribution: {
+    positive: RatingDistribution;
+    negative: RatingDistribution;
+  };
+}
+
+// 營業時間
+export interface OpeningHourPeriod {
+  open: string;
+  close: string;
+}
+
+export interface OpeningHour {
+  dayType: number; // 1-7 代表星期一到星期日
+  periods: OpeningHourPeriod[];
+}
+
+// 店家狀態
+export interface VenueStatus {
+  open: boolean;
+  openingTime: string;
+}
+
+// 店家操作權限
+export interface VenueActions {
+  edit: boolean;
+  bookmark: boolean;
+}
+
+// Venue 型別 - 完全符合後端 API 回應
 export interface Venue {
   id: string;
   name: string;
   categoryType: CategoryType;
   location: Location;
-  description: string;
-  createTime: string;
-  updateTime: string;
-  // Web端額外欄位
-  address?: string; // 從 location 轉換而來
-  pawRating?: number; // 抓抓平均評分 (0-5)
-  pawCount?: number; // 抓抓評論數量
-  poopRating?: number; // 便便平均評分 (0-5)
-  poopCount?: number; // 便便評論數量
-  mainImage?: string; // 店家主圖
+  address: string;
+  images: string[];
+  phone?: string;
+  googleMapsUrl?: string | null;
+  googlePhotoUrl?: string | null;
+  openingHours: OpeningHour[];
+  ratingSummary: RatingSummary;
+  status: VenueStatus;
+  actions: VenueActions;
 }
 
-export interface VenueDetail extends Venue {
-  phone?: string;
-  website?: string;
-  openingHours?: string;
-  tags?: string[];
-}
+// VenueDetail 繼承 Venue（目前與 Venue 相同）
+export interface VenueDetail extends Venue {}

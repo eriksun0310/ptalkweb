@@ -1,26 +1,33 @@
 // User API functions
 
 import { get } from '@/shared/api/client';
-import type { UserProfile, CommentListResponse } from '@/shared/types';
+import type { User, CommentListResponse } from '@/shared/types';
 
 /**
- * 取得用戶資料
- * @param id - 用戶 ID
- * @returns UserProfile
+ * 取得使用者資料
+ * @param id - 使用者 ID
+ * @returns User
  */
-export async function getUser(id: string): Promise<UserProfile> {
-  return get<UserProfile>(`/users/${id}`);
+export async function getUser(id: string): Promise<User> {
+  return get<User>(`/user/${id}`);
 }
 
 /**
- * 取得用戶評論列表
- * @param userId - 用戶 ID
- * @param limit - 限制數量（預設 10）
+ * 取得使用者評論列表
+ * @param userId - 使用者 ID
+ * @param page - 頁碼（預設 1）
+ * @param pageSize - 每頁筆數（預設 15）
  * @returns CommentListResponse
  */
 export async function getUserComments(
   userId: string,
-  limit: number = 10
+  page: number = 1,
+  pageSize: number = 15
 ): Promise<CommentListResponse> {
-  return get<CommentListResponse>(`/users/${userId}/comments`, { limit });
+  return get<CommentListResponse>(`/user/${userId}/comments`, {
+    page,
+    pageSize,
+    sortBy: 'updateTime',
+    sortOrder: 'desc',
+  });
 }

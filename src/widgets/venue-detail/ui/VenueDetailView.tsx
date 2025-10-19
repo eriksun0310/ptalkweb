@@ -33,9 +33,21 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
     { day: '星期日', hours: '上午 11:00 - 晚上 10:00', isToday: false },
   ];
 
-  // 準備評分分佈資料（根據實際評論計算）
-  const pawDistribution = { 5: 0, 4: 1, 3: 0, 2: 0, 1: 0 };
-  const poopDistribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  // 使用真實 API 資料的評分分佈（從 venue.ratingSummary 取得）
+  const pawDistribution = venue.ratingSummary?.distribution?.positive || {
+    '1': 0,
+    '2': 0,
+    '3': 0,
+    '4': 0,
+    '5': 0,
+  };
+  const poopDistribution = venue.ratingSummary?.distribution?.negative || {
+    '1': 0,
+    '2': 0,
+    '3': 0,
+    '4': 0,
+    '5': 0,
+  };
 
   const tabs = [
     { id: 'overview', label: '總覽' },
@@ -43,12 +55,12 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
       {/* 店家頂部資訊 */}
       <VenueInfo venue={venue} />
 
       {/* 用戶實拍照片 */}
-      {comments.length > 0 && (
+      {/* {comments.length > 0 && (
         <div className="px-4 py-3 border-b border-gray-200">
           <h2 className="text-base font-bold text-gray-900 mb-3">
             用戶實拍 · 來自 @{comments[0]?.reviewer.name || 'user'}
@@ -65,7 +77,7 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
             ))}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Tab 切換 */}
       <Tabs tabs={tabs} defaultTab="overview" onChange={setActiveTab} />
@@ -93,17 +105,17 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
             <div className="border-b border-gray-200 pt-3">
               <h3 className="text-base font-bold text-gray-900 mb-2">評論摘要</h3>
               <RatingSummary
-                pawRating={venue.pawRating ?? 0}
-                pawCount={venue.pawCount ?? 0}
+                pawRating={venue.ratingSummary.positive.rating}
+                pawCount={venue.ratingSummary.positive.count}
                 pawDistribution={pawDistribution}
-                poopRating={venue.poopRating ?? 0}
-                poopCount={venue.poopCount ?? 0}
+                poopRating={venue.ratingSummary.negative.rating}
+                poopCount={venue.ratingSummary.negative.count}
                 poopDistribution={poopDistribution}
               />
             </div>
 
             {/* 使用者評論 */}
-            <div className="py-4 space-y-4">
+            <div className="pt-4 pb-8 space-y-4">
               {comments.map((comment) => (
                 <CommentCard
                   key={comment.id}
@@ -121,17 +133,17 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
             <div className="border-b border-gray-200 pt-3">
               <h3 className="text-base font-bold text-gray-900 mb-2">評論摘要</h3>
               <RatingSummary
-                pawRating={venue.pawRating ?? 0}
-                pawCount={venue.pawCount ?? 0}
+                pawRating={venue.ratingSummary.positive.rating}
+                pawCount={venue.ratingSummary.positive.count}
                 pawDistribution={pawDistribution}
-                poopRating={venue.poopRating ?? 0}
-                poopCount={venue.poopCount ?? 0}
+                poopRating={venue.ratingSummary.negative.rating}
+                poopCount={venue.ratingSummary.negative.count}
                 poopDistribution={poopDistribution}
               />
             </div>
 
             {/* 評論列表 */}
-            <div className="py-4 space-y-4">
+            <div className="pt-4 pb-8 space-y-4">
               {comments.map((comment) => (
                 <CommentCard
                   key={comment.id}

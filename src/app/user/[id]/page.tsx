@@ -1,51 +1,56 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useParams } from 'next/navigation';
 import { UserProfileView } from '@/widgets/user-profile/ui';
-import { getMockUser, getMockUserComments } from '@/shared/lib/mockData';
+import { useUser, useUserComments } from '@/shared/hooks';
 
-type Props = {
-  params: { id: string };
-};
+export default function UserProfilePage() {
+  const params = useParams();
+  const id = params.id as string;
 
-// 產生 Metadata（Open Graph）
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  // 使用 Mock 資料
-  const user = getMockUser(params.id);
+  const { user, isLoading: isLoadingUser, isError: isErrorUser, error: userError } = useUser(id);
+  const { comments, total, isLoading: isLoadingComments } = useUserComments(id, 15);
 
-  const title = `${user.name} 的評論 | PTalk`;
-  const description = `查看 ${user.name} 的 ${user.commentCount} 則寵物友善店家評論`;
+  // 載入中狀態
+  if (isLoadingUser || isLoadingComments) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600">載入中...</p>
+        </div>
+      </div>
+    );
+  }
 
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      images: [
-        {
-          url: user.avatar,
-          width: 400,
-          height: 400,
-          alt: user.name,
-        },
-      ],
-      type: 'profile',
-      siteName: 'PTalk',
-      url: `https://ptalkweb.vercel.app/user/${params.id}`,
-    },
-    twitter: {
-      card: 'summary',
-      title,
-      description,
-      images: [user.avatar],
-    },
-  };
-}
+  // 錯誤狀態
+  if (isErrorUser || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center px-4">
+          <div className="text-6xl mb-4">❌</div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            載入失敗
+          </h2>
+          <p className="text-gray-600 mb-4">
+            {userError instanceof Error ? userError.message : '找不到此使用者'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full transition-colors"
+          >
+            重新載入
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-// Server Component - 使用 Mock 資料
-export default async function UserProfilePage({ params }: Props) {
-  // 使用 Mock 資料替代 API 請求
-  const user = getMockUser(params.id);
-  const comments = getMockUserComments(params.id, 10);
-
-  return <UserProfileView user={user} comments={comments} />;
+  return (
+    <UserProfileView
+      user={user}
+      comments={comments}
+      total={total}
+    />
+  );
 }
