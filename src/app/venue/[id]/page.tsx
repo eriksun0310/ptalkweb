@@ -1,61 +1,56 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useParams } from 'next/navigation';
 import { VenueDetailView } from '@/widgets/venue-detail/ui';
-import { getMockVenue, getMockVenueComments } from '@/shared/lib/mockData';
+import { useVenue, useVenueComments } from '@/shared/hooks';
 
-type Props = {
-  params: { id: string };
-};
+export default function VenueDetailPage() {
+  const params = useParams();
+  const id = params.id as string;
 
-// 產生 Metadata（Open Graph）
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  // 使用 Mock 資料
-  const venue = getMockVenue(params.id);
+  const { venue, isLoading: isLoadingVenue, isError: isErrorVenue, error: venueError } = useVenue(id);
+  const { comments, total, isLoading: isLoadingComments } = useVenueComments(id, 20);
 
-  const title = `${venue.name} - 寵物友善店家 | PTalk`;
-  const description = `查看 ${venue.name} 的 ${venue.pawCount || 0} 則評論，評分 ${venue.pawRating?.toFixed(1) || '0.0'}`;
+  // 載入中狀態
+  if (isLoadingVenue || isLoadingComments) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600">載入中...</p>
+        </div>
+      </div>
+    );
+  }
 
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      ...(venue.mainImage && {
-        images: [
-          {
-            url: venue.mainImage,
-            width: 1200,
-            height: 630,
-            alt: venue.name,
-          },
-        ],
-      }),
-      type: 'website',
-      siteName: 'PTalk',
-      url: `https://ptalkweb.vercel.app/venue/${params.id}`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      ...(venue.mainImage && {
-        images: [venue.mainImage],
-      }),
-    },
-  };
-}
-
-// Server Component - 使用 Mock 資料
-export default async function VenueDetailPage({ params }: Props) {
-  // 使用 Mock 資料替代 API 請求
-  const venue = getMockVenue(params.id);
-  const commentsResponse = getMockVenueComments(params.id, 20);
+  // 錯誤狀態
+  if (isErrorVenue || !venue) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center px-4">
+          <div className="text-6xl mb-4">❌</div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            載入失敗
+          </h2>
+          <p className="text-gray-600 mb-4">
+            {venueError instanceof Error ? venueError.message : '找不到此店家'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full transition-colors"
+          >
+            重新載入
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <VenueDetailView
       venue={venue}
-      comments={commentsResponse.items}
-      total={commentsResponse.total}
+      comments={comments}
+      total={total}
     />
   );
 }

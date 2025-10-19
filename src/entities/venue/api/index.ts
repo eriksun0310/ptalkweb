@@ -1,1 +1,1 @@
-export { getVenue } from './getVenue';
+export { getVenue, getVenueComments } from './getVenue';

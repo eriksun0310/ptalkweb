@@ -46,5 +46,5 @@ export default function CommentDetailPage() {
   }
 
   // 暫時不顯示相關評論，等之後實作
-  return <CommentDetailView comment={comment} relatedComments={[]} />;
+  return <CommentDetailView comment={comment} relatedComments={{ items: [], total: 0 }} />;
 }

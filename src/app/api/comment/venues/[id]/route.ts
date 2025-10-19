@@ -1,0 +1,97 @@
+// Next.js API Route - 代理店家評論列表請求，解決 CORS 問題
+
+import { NextRequest, NextResponse } from 'next/server';
+
+const API_BASE_URL = 'https://dev.api.pettalk.moushih.com/api';
+
+/**
+ * GET /api/comment/venues/[id]
+ * 代理店家評論列表請求到後端 API
+ */
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { id } = params;
+
+    // 取得查詢參數
+    const searchParams = request.nextUrl.searchParams;
+    const page = searchParams.get('page') || '1';
+    const pageSize = searchParams.get('pageSize') || '10';
+    const sortBy = searchParams.get('sortBy') || 'updateTime';
+    const sortOrder = searchParams.get('sortOrder') || 'desc';
+
+    // 建立完整的 API URL
+    const apiUrl = `${API_BASE_URL}/comment/venues/${id}?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+
+    console.log('代理請求（店家評論）:', apiUrl);
+
+    // 向後端 API 發送請求
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      console.error('API 請求失敗:', response.status, response.statusText);
+      return NextResponse.json(
+        { error: `API 請求失敗: ${response.statusText}` },
+        { status: response.status }
+      );
+    }
+
+    const apiResponse = await response.json();
+
+    // 解開 API 回傳的包裝結構
+    // API 回傳: { success: true, data: { items: [...], totalCount: 123 } }
+    // 前端期待: { items: [...], total: 123 }
+    const data = {
+      items: apiResponse.data?.items || [],
+      total: apiResponse.data?.totalCount || 0,
+    };
+
+    console.log('返回店家評論資料:', {
+      venueId: id,
+      itemsCount: data.items.length,
+      total: data.total,
+    });
+
+    // 返回資料，並設定 CORS 標頭
+    return NextResponse.json(data, {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    });
+  } catch (error) {
+    console.error('代理請求錯誤:', error);
+    return NextResponse.json(
+      { error: '代理請求失敗' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * OPTIONS /api/comment/venues/[id]
+ * 處理 CORS preflight 請求
+ */
+export async function OPTIONS() {
+  return NextResponse.json(
+    {},
+    {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    }
+  );
+}
