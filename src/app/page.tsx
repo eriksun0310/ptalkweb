@@ -1,11 +1,17 @@
 'use client';
 
 import { Metadata } from 'next';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CommentCard } from '@/entities/comment/ui';
 import { useComments } from '@/shared/hooks';
+import { detectDevice, getStoreUrl, type DeviceType } from '@/shared/lib/deeplink';
 
 export default function HomePage() {
+  const [device, setDevice] = useState<DeviceType>('desktop');
+
+  useEffect(() => {
+    setDevice(detectDevice());
+  }, []);
   const {
     comments,
     isLoading,
@@ -119,14 +125,31 @@ export default function HomePage() {
         <p className="text-sm text-gray-600 mb-3">
           在 PTalk App 探索更多店家評論
         </p>
-        <a
-          href="https://ptalk.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-full transition-colors text-sm font-semibold"
-        >
-          下載 PTalk
-        </a>
+        {device === 'ios' && (
+          <a
+            href={getStoreUrl('ios')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-full transition-colors text-sm font-semibold"
+          >
+            下載 PTalk
+          </a>
+        )}
+        {device === 'android' && (
+          <span className="inline-flex items-center gap-2 bg-gray-300 text-gray-500 px-8 py-2.5 rounded-full text-sm font-semibold cursor-not-allowed">
+            即將推出
+          </span>
+        )}
+        {device === 'desktop' && (
+          <a
+            href={getStoreUrl('desktop')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-full transition-colors text-sm font-semibold"
+          >
+            iOS 版下載
+          </a>
+        )}
       </div>
     </div>
   );

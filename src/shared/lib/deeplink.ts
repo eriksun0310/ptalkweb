@@ -26,7 +26,7 @@ export function detectDevice(): DeviceType {
  * @returns Store URL
  */
 export function getStoreUrl(device: DeviceType): string {
-  const iosUrl = process.env.NEXT_PUBLIC_IOS_APP_URL || 'https://apps.apple.com/app/ptalk';
+  const iosUrl = process.env.NEXT_PUBLIC_IOS_APP_URL || 'https://apps.apple.com/app/ptalk/id6749347348';
   const androidUrl =
     process.env.NEXT_PUBLIC_ANDROID_APP_URL ||
     'https://play.google.com/store/apps/details?id=com.ptalk';
@@ -37,7 +37,8 @@ export function getStoreUrl(device: DeviceType): string {
     return androidUrl;
   }
 
-  return '/download'; // 桌面版導向下載頁
+  // 桌面版也導向 iOS App Store（可掃 QR Code 或傳到手機）
+  return iosUrl;
 }
 
 /**

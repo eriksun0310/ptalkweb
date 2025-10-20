@@ -5,7 +5,7 @@ import { QueryProvider } from '@/shared/providers';
 import '../../styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'PTalk - 寵物友善店家評論',
+  title: 'PTalk - 寵物友善地圖',
   description: '發現最適合你和毛小孩的友善店家',
   metadataBase: new URL('https://ptalk.app'),
 };
