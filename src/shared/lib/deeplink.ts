@@ -2,6 +2,17 @@
 
 export type DeviceType = 'ios' | 'android' | 'desktop';
 
+// 🔧 手動控制：測試版 or 正式版
+// false = 測試版（TestFlight）
+// true = 正式版（App Store）
+const IS_PRODUCTION = false;
+
+// TestFlight 下載連結
+const TESTFLIGHT_URL = 'https://testflight.apple.com/join/S8e3MFwj';
+
+// App Store 下載連結
+const APP_STORE_URL = 'https://apps.apple.com/app/ptalk/id6749347348';
+
 /**
  * 偵測裝置類型
  * @returns DeviceType
@@ -21,12 +32,12 @@ export function detectDevice(): DeviceType {
 }
 
 /**
- * 取得 App Store 下載連結
+ * 取得下載連結（根據測試版/正式版）
  * @param device - 裝置類型
  * @returns Store URL
  */
 export function getStoreUrl(device: DeviceType): string {
-  const iosUrl = process.env.NEXT_PUBLIC_IOS_APP_URL || 'https://apps.apple.com/app/ptalk/id6749347348';
+  const iosUrl = IS_PRODUCTION ? APP_STORE_URL : TESTFLIGHT_URL;
   const androidUrl =
     process.env.NEXT_PUBLIC_ANDROID_APP_URL ||
     'https://play.google.com/store/apps/details?id=com.ptalk';
@@ -37,8 +48,36 @@ export function getStoreUrl(device: DeviceType): string {
     return androidUrl;
   }
 
-  // 桌面版也導向 iOS App Store（可掃 QR Code 或傳到手機）
+  // 桌面版也導向 iOS 下載連結（可掃 QR Code 或傳到手機）
   return iosUrl;
+}
+
+/**
+ * 取得按鈕文字（根據設備和版本）
+ * @param device - 裝置類型
+ * @param variant - 按鈕樣式 ('header' | 'cta')
+ * @returns 按鈕文字
+ */
+export function getButtonText(device: DeviceType, variant: 'header' | 'cta' = 'header'): string {
+  if (device === 'android') {
+    return '即將推出';
+  }
+
+  if (IS_PRODUCTION) {
+    // 正式版
+    if (device === 'ios') {
+      return variant === 'header' ? '下載 App' : '下載 PTalk';
+    } else {
+      return variant === 'header' ? 'iOS 版下載' : 'iOS 版下載';
+    }
+  } else {
+    // 測試版
+    if (device === 'ios') {
+      return variant === 'header' ? '下載測試版' : '下載測試版';
+    } else {
+      return variant === 'header' ? 'iOS 測試版' : 'iOS 測試版';
+    }
+  }
 }
 
 /**

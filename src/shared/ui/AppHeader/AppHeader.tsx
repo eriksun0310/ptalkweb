@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
-import { detectDevice, getStoreUrl, type DeviceType } from '@/shared/lib/deeplink';
+import { detectDevice, getStoreUrl, getButtonText, type DeviceType } from '@/shared/lib/deeplink';
 
 export interface AppHeaderProps {
   /** 是否顯示返回按鈕（自動判斷，也可手動覆寫） */
@@ -37,36 +37,26 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ showBack }) => {
 
   // 根據設備類型決定按鈕文字和行為
   const getDownloadButton = () => {
-    if (device === 'ios') {
-      return (
-        <a
-          href={getStoreUrl('ios')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-primary font-medium hover:text-primary/80 transition-colors"
-        >
-          下載 App
-        </a>
-      );
-    } else if (device === 'android') {
+    const buttonText = getButtonText(device, 'header');
+
+    if (device === 'android') {
       return (
         <span className="text-sm text-gray-400 font-medium cursor-not-allowed">
-          即將推出
+          {buttonText}
         </span>
       );
-    } else {
-      // 桌面版
-      return (
-        <a
-          href={getStoreUrl('desktop')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-primary font-medium hover:text-primary/80 transition-colors"
-        >
-          iOS 版下載
-        </a>
-      );
     }
+
+    return (
+      <a
+        href={getStoreUrl(device)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-primary font-medium hover:text-primary/80 transition-colors"
+      >
+        {buttonText}
+      </a>
+    );
   };
 
   return (

@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import { useEffect, useRef, useState } from 'react';
 import { CommentCard } from '@/entities/comment/ui';
 import { useComments } from '@/shared/hooks';
-import { detectDevice, getStoreUrl, type DeviceType } from '@/shared/lib/deeplink';
+import { detectDevice, getStoreUrl, getButtonText, type DeviceType } from '@/shared/lib/deeplink';
 
 export default function HomePage() {
   const [device, setDevice] = useState<DeviceType>('desktop');
@@ -125,29 +125,18 @@ export default function HomePage() {
         <p className="text-sm text-gray-600 mb-3">
           在 PTalk App 探索更多店家評論
         </p>
-        {device === 'ios' && (
-          <a
-            href={getStoreUrl('ios')}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-full transition-colors text-sm font-semibold"
-          >
-            下載 PTalk
-          </a>
-        )}
-        {device === 'android' && (
+        {device === 'android' ? (
           <span className="inline-flex items-center gap-2 bg-gray-300 text-gray-500 px-8 py-2.5 rounded-full text-sm font-semibold cursor-not-allowed">
-            即將推出
+            {getButtonText(device, 'cta')}
           </span>
-        )}
-        {device === 'desktop' && (
+        ) : (
           <a
-            href={getStoreUrl('desktop')}
+            href={getStoreUrl(device)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-full transition-colors text-sm font-semibold"
           >
-            iOS 版下載
+            {getButtonText(device, 'cta')}
           </a>
         )}
       </div>
