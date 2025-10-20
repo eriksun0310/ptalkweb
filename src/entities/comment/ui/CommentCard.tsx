@@ -103,8 +103,12 @@ export const CommentCard: React.FC<CommentCardProps> = ({
 
           {/* 第二行：寵物品種 | 分類 | 日期 | 友善程度 */}
           <div className="flex items-center gap-2 text-xs text-gray-600">
-            <span className="whitespace-nowrap">{petInfo.breed}</span>
-            <span>|</span>
+            {petInfo && (
+              <>
+                <span className="whitespace-nowrap">{petInfo.breed}</span>
+                <span>|</span>
+              </>
+            )}
             <span className="whitespace-nowrap">{getCategoryName(venue.categoryType)}</span>
             <span>|</span>
             <span className="whitespace-nowrap">{formattedDate}</span>
