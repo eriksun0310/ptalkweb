@@ -1,8 +1,7 @@
 // Next.js API Route - 代理店家評論列表請求，解決 CORS 問題
 
 import { NextRequest, NextResponse } from 'next/server';
-
-const API_BASE_URL = 'https://dev.api.pettalk.moushih.com/api';
+import { BACKEND_API_URL } from '@/shared/config';
 
 /**
  * GET /api/comment/venues/[id]
@@ -22,8 +21,8 @@ export async function GET(
     const sortBy = searchParams.get('sortBy') || 'updateTime';
     const sortOrder = searchParams.get('sortOrder') || 'desc';
 
-    // 建立完整的 API URL
-    const apiUrl = `${API_BASE_URL}/comment/venues/${id}?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+    // 建立完整的 API URL（使用統一配置的後端 API URL）
+    const apiUrl = `${BACKEND_API_URL}/comment/venues/${id}?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
 
     console.log('代理請求（店家評論）:', apiUrl);
 

@@ -1,8 +1,7 @@
 // Next.js API Route - 代理使用者評論請求，解決 CORS 問題
 
 import { NextRequest, NextResponse } from 'next/server';
-
-const API_BASE_URL = 'https://dev.api.pettalk.moushih.com/api';
+import { BACKEND_API_URL } from '@/shared/config';
 
 /**
  * GET /api/user/[id]/comments
@@ -22,8 +21,8 @@ export async function GET(
     const sortBy = searchParams.get('sortBy') || 'updateTime';
     const sortOrder = searchParams.get('sortOrder') || 'desc';
 
-    // 建立完整的 API URL（使用 /api/comment?UserId={id}）
-    const apiUrl = `${API_BASE_URL}/comment?UserId=${id}&page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+    // 建立完整的 API URL（使用統一配置的後端 API URL，使用 /api/comment?UserId={id}）
+    const apiUrl = `${BACKEND_API_URL}/comment?UserId=${id}&page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
 
     console.log('代理請求（使用者評論）:', apiUrl);
 

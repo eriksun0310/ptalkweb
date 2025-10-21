@@ -1,8 +1,7 @@
 // Next.js API Route - 代理店家詳情請求，解決 CORS 問題
 
 import { NextRequest, NextResponse } from 'next/server';
-
-const API_BASE_URL = 'https://dev.api.pettalk.moushih.com/api';
+import { BACKEND_API_URL } from '@/shared/config';
 
 /**
  * GET /api/venue/[id]
@@ -15,8 +14,8 @@ export async function GET(
   try {
     const { id } = params;
 
-    // 建立完整的 API URL
-    const apiUrl = `${API_BASE_URL}/venue/${id}`;
+    // 建立完整的 API URL（使用統一配置的後端 API URL）
+    const apiUrl = `${BACKEND_API_URL}/venue/${id}`;
 
     console.log('代理請求（店家詳情）:', apiUrl);
 

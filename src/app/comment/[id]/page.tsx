@@ -1,50 +1,89 @@
-'use client';
-
-import { useParams } from 'next/navigation';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { CommentDetailView } from '@/widgets/comment-detail/ui';
-import { useComment } from '@/shared/hooks';
+import { getCommentServer } from '@/entities/comment/api/getCommentServer';
+import type { Comment } from '@/shared/types';
 
-export default function CommentDetailPage() {
-  const params = useParams();
-  const id = params.id as string;
+interface CommentPageProps {
+  params: { id: string };
+}
 
-  const { comment, isLoading, isError, error } = useComment(id);
+/**
+ * 動態生成評論頁面的 Metadata（包含 OG 標籤）
+ */
+export async function generateMetadata({
+  params,
+}: CommentPageProps): Promise<Metadata> {
+  try {
+    const comment = await getCommentServer(params.id);
 
-  // 載入中狀態
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600">載入中...</p>
-        </div>
-      </div>
-    );
+    // 取得第一張圖片，如果沒有則使用預設圖
+    const ogImage = comment.files?.find((f) => !f.isDeleted)?.url || '/images/og-default.png';
+
+    // 截取評論內容前 100 字作為描述
+    const description = comment.content?.substring(0, 100) || '查看完整評論內容';
+
+    // 組合標題
+    const title = `${comment.reviewer?.name || '使用者'} 在 ${comment.venue?.name || '店家'} 留下了評論`;
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        images: [
+          {
+            url: ogImage,
+            width: 1200,
+            height: 630,
+            alt: `${comment.venue?.name} 的評論圖片`,
+          },
+        ],
+        url: `https://ptalk.app/comment/${params.id}`,
+        siteName: 'PTalk',
+        type: 'article',
+        locale: 'zh_TW',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [ogImage],
+      },
+    };
+  } catch (error) {
+    // 如果評論不存在，返回預設 metadata
+    return {
+      title: 'PTalk - 找不到評論',
+      description: '這則評論可能已被刪除或不存在',
+      openGraph: {
+        title: 'PTalk - 找不到評論',
+        description: '這則評論可能已被刪除或不存在',
+        images: ['/images/og-default.png'],
+      },
+    };
   }
+}
 
-  // 錯誤狀態
-  if (isError || !comment) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center px-4">
-          <div className="text-6xl mb-4">❌</div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            載入失敗
-          </h2>
-          <p className="text-gray-600 mb-4">
-            {error instanceof Error ? error.message : '找不到此評論'}
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full transition-colors"
-          >
-            重新載入
-          </button>
-        </div>
-      </div>
-    );
+/**
+ * 評論詳細頁面（Server Component）
+ */
+export default async function CommentDetailPage({ params }: CommentPageProps) {
+  let comment: Comment;
+
+  try {
+    comment = await getCommentServer(params.id);
+  } catch (error) {
+    // 如果評論不存在，顯示 404 頁面
+    notFound();
   }
 
   // 暫時不顯示相關評論，等之後實作
-  return <CommentDetailView comment={comment} relatedComments={{ items: [], totalCount: 0, pageCount: null, currentPage: 1, pageSize: 0 }} />;
+  return (
+    <CommentDetailView
+      comment={comment}
+      relatedComments={{ items: [], totalCount: 0, pageCount: null, currentPage: 1, pageSize: 0 }}
+    />
+  );
 }

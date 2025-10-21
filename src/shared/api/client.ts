@@ -1,8 +1,9 @@
-// API Client - Fetch wrapper with error handling
+/**
+ * API Client - Fetch wrapper with error handling
+ * 用於客戶端調用 Next.js API Routes
+ */
 
-// 使用 Next.js API Route 作為代理，解決 CORS 問題
-// 開發環境使用本地代理，生產環境可以設定環境變數
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+import { FRONTEND_API_URL } from '@/shared/config';
 
 export class APIError extends Error {
   constructor(
@@ -21,6 +22,8 @@ export interface FetchOptions extends RequestInit {
 
 /**
  * Fetch API wrapper with error handling
+ * 客戶端使用此函數調用 Next.js API Routes
+ *
  * @param endpoint - API endpoint (e.g., '/comments/123')
  * @param options - Fetch options with optional query params
  * @returns Parsed JSON response
@@ -31,8 +34,11 @@ export async function fetchAPI<T>(
 ): Promise<T> {
   const { params, ...fetchOptions } = options || {};
 
+  // 客戶端固定使用 '/api' (Next.js API Routes)
+  const apiUrl = FRONTEND_API_URL;
+
   // Build URL with query params
-  let url = `${API_URL}${endpoint}`;
+  let url = `${apiUrl}${endpoint}`;
   if (params) {
     const searchParams = new URLSearchParams();
     Object.entries(params).forEach(([key, value]) => {
