@@ -21,8 +21,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ showBack }) => {
     setDevice(detectDevice());
   }, []);
 
+  // 判斷是否應該隱藏 AppHeader（評論列表頁面有自己的 header）
+  const shouldHideHeader = pathname?.includes('/comments');
+
   // 自動判斷是否顯示返回按鈕
   const shouldShowBack = showBack ?? !isHomePage;
+
+  // 如果應該隱藏 header，直接返回 null
+  if (shouldHideHeader) {
+    return null;
+  }
 
   const handleBack = () => {
     // 智能返回邏輯

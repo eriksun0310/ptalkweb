@@ -64,6 +64,15 @@ module.exports = {
         'caption': ['12px', { lineHeight: '1.4', fontWeight: '400' }],
         'button': ['15px', { lineHeight: '1', fontWeight: '600' }],
       },
+      keyframes: {
+        'slide-up': {
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'slide-up': 'slide-up 0.3s ease-out',
+      },
     },
   },
   plugins: [],

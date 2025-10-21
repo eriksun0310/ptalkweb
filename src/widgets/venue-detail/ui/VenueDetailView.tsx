@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import type { Venue, Comment } from '@/shared/types';
 import { VenueInfo } from '@/entities/venue/ui';
 import { CommentCard } from '@/entities/comment/ui';
@@ -115,8 +116,8 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
             </div>
 
             {/* 使用者評論 */}
-            <div className="pt-4 pb-8 space-y-4">
-              {comments.map((comment) => (
+            <div className="pt-4 pb-4 space-y-4">
+              {comments.slice(0, 2).map((comment) => (
                 <CommentCard
                   key={comment.id}
                   comment={comment}
@@ -124,6 +125,18 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
                 />
               ))}
             </div>
+
+            {/* 查看所有評論按鈕 */}
+            {totalCount > 2 && (
+              <div className="pb-8 text-center">
+                <Link
+                  href={`/venue/${venue.id}/comments`}
+                  className="text-primary font-medium hover:underline"
+                >
+                  查看所有評論 ({totalCount})
+                </Link>
+              </div>
+            )}
           </div>
         )}
 

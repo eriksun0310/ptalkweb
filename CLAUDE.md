@@ -394,6 +394,35 @@ src/shared/config/
 └── index.ts            # 統一導出
 ```
 
+### UI/UX 規範
+
+#### 圖標使用原則
+**重要：禁止使用 Emoji，必須使用圖標庫**
+
+❌ **錯誤做法**：
+```typescript
+// 使用 emoji
+<div className="text-6xl">❌</div>
+<div className="text-6xl">📭</div>
+<div className="text-6xl">🔍</div>
+```
+
+✅ **正確做法**：
+```typescript
+// 使用 lucide-react 或其他圖標庫
+import { XCircle, Inbox, SearchX } from 'lucide-react';
+
+<XCircle className="w-16 h-16 text-red-400" strokeWidth={1.5} />
+<Inbox className="w-16 h-16 text-gray-300" strokeWidth={1.5} />
+<SearchX className="w-16 h-16 text-gray-300" strokeWidth={1.5} />
+```
+
+**原因**：
+- Emoji 在不同平台/瀏覽器顯示不一致
+- 無法精確控制大小、顏色、樣式
+- 圖標庫提供更專業、一致的視覺效果
+- 更容易維護和調整
+
 ## ✅ 開發檢查清單
 
 ### 🔍 代碼審查清單（每次提交前）
@@ -432,6 +461,11 @@ src/shared/config/
 - [ ] 是否有未使用的變數或函數？
 - [ ] 檔案結構是否整齊？
 
+#### UI/UX 檢查
+- [ ] 是否使用了 emoji？（應改用圖標庫）
+- [ ] 圖標尺寸和顏色是否一致？
+- [ ] 是否遵循設計規範？
+
 ### 🚀 新功能開發流程
 
 1. **需求分析**
@@ -466,8 +500,12 @@ src/shared/config/
 10. **Import 管理** - 保持 import 語句整潔，移除未使用的 import，遵循標準順序
 11. **資料夾管理** - 基於實際功能需求建立資料夾，定期清理空資料夾
 12. **繁體中文** - 所有回覆、註解、錯誤訊息、文件都使用繁體中文
+13. **禁止使用 Emoji** - 必須使用圖標庫（lucide-react 等），不使用 emoji
 
 ---
 
-**版本**: 1.0  
-**最後更新**: 2025-01-20
+**版本**: 1.1
+**最後更新**: 2025-10-22
+**變更記錄**:
+- v1.1 (2025-10-22): 新增 UI/UX 規範，禁止使用 Emoji
+- v1.0 (2025-01-20): 初始版本
