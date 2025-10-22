@@ -15,7 +15,7 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
     const fullStars = Math.floor(rating);
     const icons = [];
     const Icon = type === 'paw' ? FaPaw : FaPoop;
-    const colorClass = type === 'paw' ? 'text-[#FFB800]' : 'text-gray-300';
+    const colorClass = type === 'paw' ? 'text-[#ffc107c8]' : 'text-gray-300';
 
     for (let i = 0; i < 5; i++) {
       icons.push(

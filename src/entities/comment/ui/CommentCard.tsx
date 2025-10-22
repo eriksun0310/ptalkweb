@@ -9,7 +9,7 @@ import { RatingDisplay } from './RatingDisplay';
 import { CommentImages } from './CommentImages';
 import { getAvatarSource } from '@/shared/lib/avatar';
 import { getPetFriendlyIcon } from '@/shared/constants/icons';
-import { FaPaw } from 'react-icons/fa';
+import { FaPaw, FaPoop } from 'react-icons/fa';
 import clsx from 'clsx';
 
 export interface CommentCardProps {
@@ -50,30 +50,41 @@ export const CommentCard: React.FC<CommentCardProps> = ({
     }
   };
 
-  // 預覽模式：截斷文字到 100 字
-  const displayContent =
-    isPreview && content.length > 100 ? `${content.substring(0, 100)}...` : content;
+  // 預覽模式：截斷文字到 20 字
+  const MAX_PREVIEW_LENGTH = 20;
+  const shouldTruncate = isPreview && content.length > MAX_PREVIEW_LENGTH;
+  const displayContent = shouldTruncate
+    ? content.substring(0, MAX_PREVIEW_LENGTH)
+    : content;
 
   // 格式化日期
   const date = new Date(updateTime);
   const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
-  // 渲染評論評分（1-5 顆爪子/便便）
+  // 渲染評論評分（1-5 顆爪子/便便）- 根據 feedback.type 動態選擇圖標和顏色
   const renderRatingIcons = () => {
     const icons = [];
     const rating = Math.round(feedback.rating); // 取整數評分
 
+    // 根據 feedback.type 決定圖標和顏色
+    const isPaw = feedback.type === 1; // 1: 抓抓 (好評), 2: 便便 (負評)
+    const Icon = isPaw ? FaPaw : FaPoop;
+    const activeColor = isPaw ? 'text-[#ffc107c8]' : 'text-[#8B5E3C]';
+
+    // 渲染填充的圖標
     for (let i = 0; i < rating; i++) {
       icons.push(
-        <FaPaw key={i} className="w-4 h-4 text-[#FFB800]" />
+        <Icon key={i} className={`w-4 h-4 ${activeColor}`} />
       );
     }
+
     // 補齊灰色圖示到5個
     for (let i = rating; i < 5; i++) {
       icons.push(
-        <FaPaw key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
+        <Icon key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
       );
     }
+
     return icons;
   };
 
@@ -112,8 +123,14 @@ export const CommentCard: React.FC<CommentCardProps> = ({
             <span className="whitespace-nowrap">{getCategoryName(venue.categoryType)}</span>
             <span>|</span>
             <span className="whitespace-nowrap">{formattedDate}</span>
-            <span>|</span>
-            <span className="flex-shrink-0">{getPetFriendlyIcon(petFriendlyLevel)}</span>
+            {
+              petFriendlyLevel &&(
+                <>
+                  <span>|</span>
+                  <span className="flex-shrink-0">{getPetFriendlyIcon(petFriendlyLevel)}</span>
+                </>
+              )
+            }
           </div>
         </div>
       </div>
@@ -128,6 +145,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
       {/* Content */}
       <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap mb-3">
         {displayContent}
+        {shouldTruncate && <span className="text-gray-500">...更多</span>}
       </p>
 
       {/* Images */}

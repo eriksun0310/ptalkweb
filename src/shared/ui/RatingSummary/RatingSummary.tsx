@@ -31,7 +31,7 @@ export const RatingSummary: React.FC<RatingSummaryProps> = ({
 }) => {
   // 渲染評分條形圖（採用 App 版本的計算邏輯）
   const renderRatingBars = (distribution: RatingDistribution, type: 'paw' | 'poop') => {
-    const barColor = type === 'paw' ? 'bg-[#FFB800]' : 'bg-[#8B5E3C]';
+    const barColor = type === 'paw' ? 'bg-[#ffc107c8]' : 'bg-[#8B5E3C]';
 
     // 計算總評論數（與 App 版本一致）
     const totalReviews = distribution
@@ -78,7 +78,7 @@ export const RatingSummary: React.FC<RatingSummaryProps> = ({
     const fullStars = Math.floor(rating);
     const icons = [];
     const Icon = type === 'paw' ? FaPaw : FaPoop;
-    const colorClass = type === 'paw' ? 'text-[#FFB800]' : 'text-[#8B5E3C]';
+    const colorClass = type === 'paw' ? 'text-[#ffc107c8]' : 'text-[#8B5E3C]';
 
     for (let i = 0; i < 5; i++) {
       icons.push(

@@ -35,7 +35,7 @@ export const RatingDisplay: React.FC<RatingDisplayProps> = ({
     lg: 'px-4 py-2',
   };
 
-  const bgColor = isPaw ? 'bg-[#FFB800]' : 'bg-[#8B5E3C]';
+  const bgColor = isPaw ? 'bg-[#ffc107c8]' : 'bg-[#8B5E3C]';
   const textColor = 'text-white';
   const label = isPaw ? '抓抓' : '便便';
 
@@ -58,7 +58,7 @@ export const RatingDisplay: React.FC<RatingDisplayProps> = ({
 
       {/* 標籤文字 */}
       {showLabel && (
-        <span className={clsx('font-medium', isPaw ? 'text-[#FFB800]' : 'text-[#8B5E3C]', sizeStyles[size])}>
+        <span className={clsx('font-medium', isPaw ? 'text-[#ffc107c8]' : 'text-[#8B5E3C]', sizeStyles[size])}>
           {label}
         </span>
       )}
