@@ -7,14 +7,29 @@ export interface CommentImagesProps {
   images: string[];
   className?: string;
   variant?: 'preview' | 'full';
+  /** 評論相關的店家名稱（用於改善 alt 描述） */
+  venueName?: string;
+  /** 評論相關的寵物品種（用於改善 alt 描述） */
+  petBreed?: string;
 }
 
 export const CommentImages: React.FC<CommentImagesProps> = ({
   images,
   className,
-  variant = 'preview'
+  variant = 'preview',
+  venueName,
+  petBreed
 }) => {
   if (!images || images.length === 0) return null;
+
+  // 生成更具描述性的 alt 文字
+  const getAltText = (index: number) => {
+    const parts = [];
+    if (venueName) parts.push(venueName);
+    if (petBreed) parts.push(petBreed);
+    parts.push(`寵物評論照片 ${index + 1}`);
+    return parts.join(' - ');
+  };
 
   // preview 模式：最多顯示 3 張小圖
   if (variant === 'preview') {
@@ -29,7 +44,7 @@ export const CommentImages: React.FC<CommentImagesProps> = ({
           >
             <Image
               src={image}
-              alt={`評論圖片 ${index + 1}`}
+              alt={getAltText(index)}
               fill
               className="object-cover"
               sizes="96px"

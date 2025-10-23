@@ -40,7 +40,7 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
         <div className="relative w-full aspect-video">
           <Image
             src={venue.images[0]}
-            alt={venue.name}
+            alt={`${venue.name} 店家照片`}
             fill
             className="object-cover"
             sizes="100vw"

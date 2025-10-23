@@ -153,21 +153,25 @@ export const CommentCard: React.FC<CommentCardProps> = ({
         <CommentImages
           images={imageUrls}
           variant={variant === 'preview' ? 'preview' : 'full'}
+          venueName={venue.name}
+          petBreed={petInfo?.breed}
         />
       )}
     </>
   );
 
   return (
-    <div
+    <article
       onClick={handleCardClick}
       className={clsx(
         'bg-white p-4 relative border-b border-gray-100',
         isPreview && 'cursor-pointer active:bg-gray-50 transition-colors',
         className
       )}
+      itemScope
+      itemType="https://schema.org/Review"
     >
       {cardContent}
-    </div>
+    </article>
   );
 };

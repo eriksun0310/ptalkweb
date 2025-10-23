@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { UserProfileView } from '@/widgets/user-profile/ui';
 import { getUserServer, getUserCommentsServer } from '@/entities/user/api';
 import type { User } from '@/shared/types';
+import { Breadcrumb } from '@/shared/ui/Breadcrumb';
 import {
   generateProfilePageSchema,
   generateBreadcrumbSchema,
@@ -121,9 +122,16 @@ export default async function UserProfilePage({ params }: UserPageProps) {
   const profilePageSchema = generateProfilePageSchema(user);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '首頁', url: '/' },
-    { name: '使用者', url: '/users' },
-    { name: user.name }, // 當前頁面不需要 url
+    { name: '使用者' },
+    { name: user.name },
   ]);
+
+  // 麵包屑導航項目
+  const breadcrumbItems = [
+    { name: '首頁', href: '/' },
+    { name: '使用者' },
+    { name: user.name },
+  ];
 
   return (
     <>
@@ -140,6 +148,9 @@ export default async function UserProfilePage({ params }: UserPageProps) {
           __html: JSON.stringify(breadcrumbSchema),
         }}
       />
+
+      {/* 麵包屑導航 */}
+      <Breadcrumb items={breadcrumbItems} />
 
       {/* 渲染頁面內容 */}
       <UserProfileView

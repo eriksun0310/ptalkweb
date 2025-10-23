@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { VenueDetailView } from '@/widgets/venue-detail/ui';
 import { getVenueServer, getVenueCommentsServer } from '@/entities/venue/api';
 import type { VenueDetail } from '@/shared/types';
+import { Breadcrumb } from '@/shared/ui/Breadcrumb';
 import {
   generateLocalBusinessSchema,
   generateBreadcrumbSchema,
@@ -149,9 +150,16 @@ export default async function VenueDetailPage({ params }: VenuePageProps) {
   const localBusinessSchema = generateLocalBusinessSchema(venue);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '首頁', url: '/' },
-    { name: '店家', url: '/venues' },
-    { name: venue.name }, // 當前頁面不需要 url
+    { name: '店家' },
+    { name: venue.name },
   ]);
+
+  // 麵包屑導航項目
+  const breadcrumbItems = [
+    { name: '首頁', href: '/' },
+    { name: '店家' },
+    { name: venue.name },
+  ];
 
   return (
     <>
@@ -168,6 +176,9 @@ export default async function VenueDetailPage({ params }: VenuePageProps) {
           __html: JSON.stringify(breadcrumbSchema),
         }}
       />
+
+      {/* 麵包屑導航 */}
+      <Breadcrumb items={breadcrumbItems} />
 
       {/* 渲染頁面內容 */}
       <VenueDetailView

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { CommentDetailView } from '@/widgets/comment-detail/ui';
 import { getCommentServer } from '@/entities/comment/api/getCommentServer';
 import type { Comment } from '@/shared/types';
+import { Breadcrumb } from '@/shared/ui/Breadcrumb';
 import {
   generateReviewSchema,
   generateBreadcrumbSchema,
@@ -121,9 +122,16 @@ export default async function CommentDetailPage({ params }: CommentPageProps) {
   const reviewSchema = generateReviewSchema(comment);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '首頁', url: '/' },
-    { name: '評論', url: '/comments' },
-    { name: comment.venue?.name || '店家' }, // 當前頁面不需要 url
+    { name: '評論' },
+    { name: comment.venue?.name || '店家' },
   ]);
+
+  // 麵包屑導航項目
+  const breadcrumbItems = [
+    { name: '首頁', href: '/' },
+    { name: '評論' },
+    { name: comment.venue?.name || '店家' },
+  ];
 
   // 暫時不顯示相關評論，等之後實作
   return (
@@ -141,6 +149,9 @@ export default async function CommentDetailPage({ params }: CommentPageProps) {
           __html: JSON.stringify(breadcrumbSchema),
         }}
       />
+
+      {/* 麵包屑導航 */}
+      <Breadcrumb items={breadcrumbItems} />
 
       {/* 渲染頁面內容 */}
       <CommentDetailView

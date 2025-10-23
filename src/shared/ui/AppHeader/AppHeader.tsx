@@ -68,15 +68,18 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ showBack }) => {
   };
 
   return (
-    <div className="sticky top-0 z-10 bg-gray-50">
-      <div className="max-w-[600px] mx-auto bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+    <header className="sticky top-0 z-10 bg-gray-50">
+      <nav
+        className="max-w-[600px] mx-auto bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between"
+        aria-label="主導航"
+      >
         {/* 左側：返回按鈕 + Logo */}
         <div className="flex items-center gap-2 flex-1">
           {shouldShowBack && (
             <button
               onClick={handleBack}
               className="p-1 -ml-1 hover:bg-gray-100 rounded-full transition-colors"
-              aria-label="返回"
+              aria-label="返回上一頁"
             >
               <ChevronLeft className="w-6 h-6 text-gray-700" />
             </button>
@@ -85,10 +88,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ showBack }) => {
           <Link
             href="/"
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+            aria-label="回到首頁"
           >
             <img
               src="/images/appIcon.png"
-              alt="PTalk"
+              alt="PTalk 寵物友善地圖 Logo"
               className="w-8 h-8 rounded-lg"
             />
             <h1 className="text-lg font-bold text-gray-900">PTalk</h1>
@@ -97,7 +101,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ showBack }) => {
 
         {/* 右側：下載 App 連結 */}
         {getDownloadButton()}
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
