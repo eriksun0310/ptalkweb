@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { detectDevice, getStoreUrl, getButtonText, type DeviceType } from '@/shared/lib/deeplink';
@@ -90,10 +91,13 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ showBack }) => {
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
             aria-label="回到首頁"
           >
-            <img
+            <Image
               src="/images/appIcon.png"
               alt="PTalk 寵物友善地圖 Logo"
-              className="w-8 h-8 rounded-lg"
+              width={32}
+              height={32}
+              className="rounded-lg"
+              priority
             />
             <h1 className="text-lg font-bold text-gray-900">PTalk</h1>
           </Link>

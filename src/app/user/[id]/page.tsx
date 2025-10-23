@@ -122,14 +122,12 @@ export default async function UserProfilePage({ params }: UserPageProps) {
   const profilePageSchema = generateProfilePageSchema(user);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '首頁', url: '/' },
-    { name: '使用者' },
     { name: user.name },
   ]);
 
   // 麵包屑導航項目
   const breadcrumbItems = [
     { name: '首頁', href: '/' },
-    { name: '使用者' },
     { name: user.name },
   ];
 

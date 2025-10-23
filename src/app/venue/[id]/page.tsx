@@ -150,14 +150,12 @@ export default async function VenueDetailPage({ params }: VenuePageProps) {
   const localBusinessSchema = generateLocalBusinessSchema(venue);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '首頁', url: '/' },
-    { name: '店家' },
     { name: venue.name },
   ]);
 
   // 麵包屑導航項目
   const breadcrumbItems = [
     { name: '首頁', href: '/' },
-    { name: '店家' },
     { name: venue.name },
   ];
 

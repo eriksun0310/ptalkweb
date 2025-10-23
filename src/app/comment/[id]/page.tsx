@@ -122,14 +122,12 @@ export default async function CommentDetailPage({ params }: CommentPageProps) {
   const reviewSchema = generateReviewSchema(comment);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '首頁', url: '/' },
-    { name: '評論' },
     { name: comment.venue?.name || '店家' },
   ]);
 
   // 麵包屑導航項目
   const breadcrumbItems = [
     { name: '首頁', href: '/' },
-    { name: '評論' },
     { name: comment.venue?.name || '店家' },
   ];
 
