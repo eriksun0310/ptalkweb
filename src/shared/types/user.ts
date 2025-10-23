@@ -20,6 +20,7 @@ export interface UserPetInfo {
  */
 export interface User {
   id: string;
+  userId?: string; // 兼容不同 API 回傳格式
   name: string;
   email: string;
   genderType: GenderType;
@@ -28,6 +29,8 @@ export interface User {
   status: number;
   appPushToken?: string;
   petInfo: UserPetInfo;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 /**

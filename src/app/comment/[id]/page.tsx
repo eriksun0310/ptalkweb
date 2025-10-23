@@ -3,13 +3,18 @@ import { notFound } from 'next/navigation';
 import { CommentDetailView } from '@/widgets/comment-detail/ui';
 import { getCommentServer } from '@/entities/comment/api/getCommentServer';
 import type { Comment } from '@/shared/types';
+import {
+  generateReviewSchema,
+  generateBreadcrumbSchema,
+  getCategoryText,
+} from '@/shared/lib/seo';
 
 interface CommentPageProps {
   params: { id: string };
 }
 
 /**
- * 動態生成評論頁面的 Metadata（包含 OG 標籤）
+ * 動態生成評論頁面的 Metadata（包含 OG 標籤和 Canonical URL）
  */
 export async function generateMetadata({
   params,
@@ -26,9 +31,42 @@ export async function generateMetadata({
     // 組合標題
     const title = `${comment.reviewer?.name || '使用者'} 在 ${comment.venue?.name || '店家'} 留下了評論`;
 
+    // 動態關鍵字
+    const categoryText = comment.venue?.categoryType
+      ? getCategoryText(comment.venue.categoryType)
+      : '店家';
+    const keywords = [
+      comment.venue?.name || '',
+      categoryText,
+      '寵物友善評論',
+      '寵物體驗',
+      comment.petInfo?.breed || '',
+      '毛小孩',
+    ].filter(Boolean);
+
     return {
       title,
       description,
+      keywords,
+
+      // Canonical URL
+      alternates: {
+        canonical: `https://ptalk.app/comment/${params.id}`,
+      },
+
+      // Robots 設定
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+        },
+      },
+
       openGraph: {
         title,
         description,
@@ -79,11 +117,36 @@ export default async function CommentDetailPage({ params }: CommentPageProps) {
     notFound();
   }
 
+  // 生成結構化資料
+  const reviewSchema = generateReviewSchema(comment);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: '首頁', url: '/' },
+    { name: '評論', url: '/comments' },
+    { name: comment.venue?.name || '店家' }, // 當前頁面不需要 url
+  ]);
+
   // 暫時不顯示相關評論，等之後實作
   return (
-    <CommentDetailView
-      comment={comment}
-      relatedComments={{ items: [], totalCount: 0, pageCount: null, currentPage: 1, pageSize: 0 }}
-    />
+    <>
+      {/* JSON-LD 結構化資料 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(reviewSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
+      {/* 渲染頁面內容 */}
+      <CommentDetailView
+        comment={comment}
+        relatedComments={{ items: [], totalCount: 0, pageCount: null, currentPage: 1, pageSize: 0 }}
+      />
+    </>
   );
 }

@@ -106,11 +106,11 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
             <div className="border-b border-gray-200 pt-3">
               <h3 className="text-base font-bold text-gray-900 mb-2">評論摘要</h3>
               <RatingSummary
-                pawRating={venue.ratingSummary.positive.rating}
-                pawCount={venue.ratingSummary.positive.count}
+                pawRating={venue.ratingSummary?.positive?.rating ?? 0}
+                pawCount={venue.ratingSummary?.positive?.count ?? 0}
                 pawDistribution={pawDistribution}
-                poopRating={venue.ratingSummary.negative.rating}
-                poopCount={venue.ratingSummary.negative.count}
+                poopRating={venue.ratingSummary?.negative?.rating ?? 0}
+                poopCount={venue.ratingSummary?.negative?.count ?? 0}
                 poopDistribution={poopDistribution}
               />
             </div>
@@ -146,11 +146,11 @@ export const VenueDetailView: React.FC<VenueDetailViewProps> = ({
             <div className="border-b border-gray-200 pt-3">
               <h3 className="text-base font-bold text-gray-900 mb-2">評論摘要</h3>
               <RatingSummary
-                pawRating={venue.ratingSummary.positive.rating}
-                pawCount={venue.ratingSummary.positive.count}
+                pawRating={venue.ratingSummary?.positive?.rating ?? 0}
+                pawCount={venue.ratingSummary?.positive?.count ?? 0}
                 pawDistribution={pawDistribution}
-                poopRating={venue.ratingSummary.negative.rating}
-                poopCount={venue.ratingSummary.negative.count}
+                poopRating={venue.ratingSummary?.negative?.rating ?? 0}
+                poopCount={venue.ratingSummary?.negative?.count ?? 0}
                 poopDistribution={poopDistribution}
               />
             </div>

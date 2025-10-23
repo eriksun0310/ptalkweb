@@ -28,10 +28,10 @@ export const VenueInfo: React.FC<VenueInfoProps> = ({ venue, className }) => {
     return icons;
   };
 
-  const pawRating = venue.ratingSummary.positive.rating;
-  const pawCount = venue.ratingSummary.positive.count;
-  const poopRating = venue.ratingSummary.negative.rating;
-  const poopCount = venue.ratingSummary.negative.count;
+  const pawRating = venue.ratingSummary?.positive?.rating ?? 0;
+  const pawCount = venue.ratingSummary?.positive?.count ?? 0;
+  const poopRating = venue.ratingSummary?.negative?.rating ?? 0;
+  const poopCount = venue.ratingSummary?.negative?.count ?? 0;
 
   return (
     <div className={clsx('bg-white', className)}>

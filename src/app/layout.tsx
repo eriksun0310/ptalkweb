@@ -10,7 +10,56 @@ export const metadata: Metadata = {
     template: '%s | PTalk',
   },
   description: '發現最適合你和毛小孩的友善店家，查看真實評價，分享你的寵物體驗',
+
+  // 關鍵字
+  keywords: [
+    '寵物友善',
+    '寵物地圖',
+    '寵物餐廳',
+    '寵物咖啡廳',
+    '毛小孩',
+    '狗狗友善',
+    '貓咪友善',
+    '寵物評論',
+    '寵物旅館',
+    '寵物公園',
+    'PTalk',
+  ],
+
+  // 作者和創作者資訊
+  authors: [{ name: 'PTalk' }],
+  creator: 'PTalk',
+  publisher: 'PTalk',
+
+  // Base URL
   metadataBase: new URL('https://ptalk.app'),
+
+  // Canonical URL（首頁）
+  alternates: {
+    canonical: 'https://ptalk.app',
+  },
+
+  // Robots 設定
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  // 格式偵測
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+
+  // Open Graph
   openGraph: {
     title: 'PTalk - 寵物友善地圖',
     description: '發現最適合你和毛小孩的友善店家，查看真實評價，分享你的寵物體驗',
@@ -25,13 +74,33 @@ export const metadata: Metadata = {
     siteName: 'PTalk',
     type: 'website',
     locale: 'zh_TW',
+    url: 'https://ptalk.app',
   },
+
+  // Twitter Card
   twitter: {
     card: 'summary_large_image',
     title: 'PTalk - 寵物友善地圖',
     description: '發現最適合你和毛小孩的友善店家',
     images: ['/images/og-default.png'],
   },
+
+  // App 相關設定
+  appleWebApp: {
+    capable: true,
+    title: 'PTalk',
+    statusBarStyle: 'default',
+  },
+
+  // 其他 meta 標籤
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
+
+  // 未來可加入 Google Search Console 驗證
+  // verification: {
+  //   google: 'your-google-verification-code',
+  // },
 };
 
 export default function RootLayout({

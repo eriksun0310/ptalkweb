@@ -72,10 +72,10 @@ export interface Venue {
   phone?: string;
   googleMapsUrl?: string | null;
   googlePhotoUrl?: string | null;
-  openingHours: OpeningHour[];
-  ratingSummary: RatingSummary;
-  status: VenueStatus;
-  actions: VenueActions;
+  openingHours?: OpeningHour[];
+  ratingSummary?: RatingSummary;
+  status?: VenueStatus;
+  actions?: VenueActions;
 }
 
 // VenueDetail 繼承 Venue（目前與 Venue 相同）

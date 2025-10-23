@@ -1,56 +1,152 @@
-'use client';
-
-import { useParams } from 'next/navigation';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { UserProfileView } from '@/widgets/user-profile/ui';
-import { useUser, useUserComments } from '@/shared/hooks';
+import { getUserServer, getUserCommentsServer } from '@/entities/user/api';
+import type { User } from '@/shared/types';
+import {
+  generateProfilePageSchema,
+  generateBreadcrumbSchema,
+} from '@/shared/lib/seo';
 
-export default function UserProfilePage() {
-  const params = useParams();
-  const id = params.id as string;
+interface UserPageProps {
+  params: { id: string };
+}
 
-  const { user, isLoading: isLoadingUser, isError: isErrorUser, error: userError } = useUser(id);
-  const { comments, totalCount, isLoading: isLoadingComments } = useUserComments(id, 15);
+/**
+ * 動態生成使用者頁面的 Metadata（包含 OG 標籤和 Canonical URL）
+ */
+export async function generateMetadata({
+  params,
+}: UserPageProps): Promise<Metadata> {
+  try {
+    const user = await getUserServer(params.id);
 
-  // 載入中狀態
-  if (isLoadingUser || isLoadingComments) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600">載入中...</p>
-        </div>
-      </div>
-    );
+    // 組合標題和描述
+    const title = `${user.name} 的個人檔案`;
+    const description = `查看 ${user.name} 在 PTalk 分享的寵物友善評論和體驗`;
+
+    // 動態關鍵字
+    const keywords = [
+      user.name,
+      'PTalk 使用者',
+      '寵物評論',
+      '寵物友善體驗',
+      '毛小孩',
+    ];
+
+    return {
+      title,
+      description,
+      keywords,
+
+      // Canonical URL
+      alternates: {
+        canonical: `https://ptalk.app/user/${params.id}`,
+      },
+
+      // Robots 設定
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+        },
+      },
+
+      // Open Graph
+      openGraph: {
+        title,
+        description,
+        images: ['/images/og-default.png'], // 使用者頁面使用預設圖
+        url: `https://ptalk.app/user/${params.id}`,
+        siteName: 'PTalk',
+        type: 'profile',
+        locale: 'zh_TW',
+      },
+
+      // Twitter Card
+      twitter: {
+        card: 'summary',
+        title,
+        description,
+        images: ['/images/og-default.png'],
+      },
+    };
+  } catch (error) {
+    // 如果使用者不存在，返回預設 metadata
+    return {
+      title: 'PTalk - 找不到使用者',
+      description: '這位使用者可能不存在或已被移除',
+      openGraph: {
+        title: 'PTalk - 找不到使用者',
+        description: '這位使用者可能不存在或已被移除',
+        images: ['/images/og-default.png'],
+      },
+    };
+  }
+}
+
+/**
+ * 使用者個人檔案頁面（Server Component）
+ */
+export default async function UserProfilePage({ params }: UserPageProps) {
+  let user: User;
+  let comments: any[] = [];
+  let totalCount = 0;
+
+  try {
+    // 先獲取使用者資料
+    user = await getUserServer(params.id);
+  } catch (error) {
+    // 如果使用者不存在，顯示 404 頁面
+    notFound();
   }
 
-  // 錯誤狀態
-  if (isErrorUser || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center px-4">
-          <div className="text-6xl mb-4">❌</div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            載入失敗
-          </h2>
-          <p className="text-gray-600 mb-4">
-            {userError instanceof Error ? userError.message : '找不到此使用者'}
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full transition-colors"
-          >
-            重新載入
-          </button>
-        </div>
-      </div>
-    );
+  try {
+    // 獲取評論資料（失敗也不影響頁面顯示）
+    const commentsData = await getUserCommentsServer(params.id, 1, 15);
+    comments = commentsData.items || [];
+    totalCount = commentsData.totalCount || 0;
+  } catch (error) {
+    // 評論載入失敗，使用空陣列
+    comments = [];
+    totalCount = 0;
   }
+
+  // 生成結構化資料
+  const profilePageSchema = generateProfilePageSchema(user);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: '首頁', url: '/' },
+    { name: '使用者', url: '/users' },
+    { name: user.name }, // 當前頁面不需要 url
+  ]);
 
   return (
-    <UserProfileView
-      user={user}
-      comments={comments}
-      totalCount={totalCount}
-    />
+    <>
+      {/* JSON-LD 結構化資料 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(profilePageSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
+      {/* 渲染頁面內容 */}
+      <UserProfileView
+        user={user}
+        comments={comments}
+        totalCount={totalCount}
+      />
+    </>
   );
 }
